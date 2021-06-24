@@ -6,12 +6,15 @@ from dotenv import load_dotenv, find_dotenv, dotenv_values
 
 load_dotenv()
 token = os.getenv('API_TOKEN')
-print(token)
+bot_name = None
 
 if __name__ == '__main__':
-    if token is None:
-        t = input("Good! Paste the API token:\n")
-        os.putenv("API_TOKEN", t)
-        print("Successfully set API TOKEN!")
-    else:
-        print("Current api token is: " + str(token))
+    main()
+    # if token is None:
+    #     t = input("Good! Paste the API token:\n>>>")
+    #     os.putenv("API_TOKEN", t)
+    #     print("Successfully set API TOKEN!")
+    # else:
+    #     print("Current API token is: " + str(token))
+    #     print(f"Bot is: {bot_name}")
+    #     input("Would you like to change it? [y/n]: ")
