@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Custom ignored files
+/.idea/
+.DS_Store
+
 # C extensions
 *.so
 
