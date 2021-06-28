@@ -6,6 +6,7 @@ __pycache__/
 # Custom ignored files
 /.idea/
 .DS_Store
+tests/
 
 # C extensions
 *.so
