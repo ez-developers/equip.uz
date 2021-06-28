@@ -1,12 +1,5 @@
-import sys
-import os
-import io
 from main import main
-from dotenv import load_dotenv, find_dotenv, dotenv_values
 
-load_dotenv()
-token = os.getenv('API_TOKEN')
-bot_name = None
 
 if __name__ == '__main__':
     main()

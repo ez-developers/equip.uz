@@ -2,22 +2,35 @@ from telegram.ext import (Updater,
                           CommandHandler,
                           ConversationHandler,
                           MessageHandler,
-                          Filters)
+                          Filters,
+                          CallbackQueryHandler,
+                          Defaults)
 from dotenv import load_dotenv
-from callbacks.start import start
+from callbacks.commands import start
+from callbacks.language import get_language
+from utils.states import *
 import os
+import logging
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    level=logging.DEBUG)
 
 
 def main():
     load_dotenv()
-    updater = Updater(token=os.getenv('API_TOKEN'))
+    defaults = Defaults(parse_mode="HTML", disable_notification=True)
+    updater = Updater(token=os.getenv('API_TOKEN'), defaults=defaults)
     dispatcher = updater.dispatcher
 
     conversation = ConversationHandler(
         entry_points=[
             CommandHandler('start', start)
         ],
-        states={},
+        states={
+            LANGUAGE: [
+                MessageHandler(Filters.text, get_language)
+            ]
+        },
         fallbacks=[]
     )
 
