@@ -4,16 +4,21 @@ from telegram.ext import (Updater,
                           MessageHandler,
                           Filters,
                           CallbackQueryHandler,
-                          Defaults)
+                          Defaults,
+                          CallbackContext)
+from telegram import Update
 from dotenv import load_dotenv
-from callbacks.commands import start
-from callbacks.language import get_language
-from utils.states import *
+from bot.src.commands import Command
+from bot.src.language import get_language
+from bot.utils.states import *
 import os
 import logging
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.DEBUG)
+
+
+copy = Command()
 
 
 def main():
@@ -24,7 +29,7 @@ def main():
 
     conversation = ConversationHandler(
         entry_points=[
-            CommandHandler('start', start)
+            CommandHandler('start', callback=Command().start)
         ],
         states={
             LANGUAGE: [
