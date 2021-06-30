@@ -1,17 +1,14 @@
 from telegram.ext import CallbackContext
-from .language import ask_language
-from bot.utils.states import LANGUAGE
 from telegram import Update
 
 
 class Command:
 
     def __init__(self):
-        self.state = 1
+        self.state = None
 
     def start(self, update, context):
-        print(self)
-        print(update, "start")
+        pass
 
     def help_command(self, update, context):
         print(self, 'help', update.effective_chat.id)
@@ -21,4 +18,3 @@ class Command:
 
     def reset(self):
         print(self, 'reset')
-
