@@ -4,16 +4,27 @@ from telegram.ext import (Updater,
                           MessageHandler,
                           Filters,
                           CallbackQueryHandler,
-                          Defaults)
+                          Defaults,
+                          CallbackContext)
+from telegram import Update, KeyboardButton
 from dotenv import load_dotenv
-from callbacks.commands import start
-from callbacks.language import get_language
-from utils.states import *
+from bot.src.registration import Registration
+from bot.src.language import get_language
+from bot.utils.states import *
 import os
 import logging
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.DEBUG)
+                    level=logging.INFO)
+
+states = {
+    "LANGUAGE": 1,
+    "NAME": 2,
+    "PHONE": 3,
+    "PHONE_CODE": 4,
+}
+
+registration = Registration(states=states)
 
 
 def main():
@@ -24,11 +35,12 @@ def main():
 
     conversation = ConversationHandler(
         entry_points=[
-            CommandHandler('start', start)
+            CommandHandler(
+                'start', callback=registration.request_language)
         ],
         states={
-            LANGUAGE: [
-                MessageHandler(Filters.text, get_language)
+            1: [
+                MessageHandler(Filters.text, registration.do_something),
             ]
         },
         fallbacks=[]

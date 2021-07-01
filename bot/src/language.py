@@ -3,7 +3,7 @@ import os
 from telegram import ReplyKeyboardMarkup, Update, Message
 from telegram.ext import CallbackContext
 
-txt = json.load(open(os.path.abspath('assets/texts.json'), 'r'))
+txt = json.load(open("bot/assets/texts.json", 'r'))
 
 
 def ask_language(update: Update, context: CallbackContext) -> Message:

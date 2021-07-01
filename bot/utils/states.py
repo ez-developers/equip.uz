@@ -1,8 +1,9 @@
-# (
-LANGUAGE = 1
-# ) = range(1)
+(
+    LANGUAGE
+) = range(1)
 
 
+# TODO: Needs to be implemented
 class State:
 
     def __init__(self, state: int = None):
