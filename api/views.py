@@ -7,23 +7,51 @@ from rest_framework.response import Response
 from .serializers import UserSerializer, CategorySerializer, ProductSerializer
 
 @api_view(['GET',])
+@permission_classes([IsAuthenticated])
 def getUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
 
+@api_view(['GET',])
+@permission_classes([IsAuthenticated])
+def getUser(request, pk):
+    user = User.objects.get(user_id=pk)
+    serializer = UserSerializer(user, many=False)
+    return Response(serializer.data)
+
 
 
 @api_view(['GET',])
+@permission_classes([IsAuthenticated])
 def getProducts(request):
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)    
+
+@api_view(['GET',])
+@permission_classes([IsAuthenticated])
+def getProduct(request, pk):
+    product = Product.objects.get(pk=pk)
+    serializer = ProductSerializer(product, many=False)
+    return Response(serializer.data)
+
     
 
 
 @api_view(['GET',])
+@permission_classes([IsAuthenticated])
 def getCategories(request):
     categories = Category.objects.all()
     serializer = CategorySerializer(categories, many=True)
     return Response(serializer.data)
+
+@api_view(['GET',])
+@permission_classes([IsAuthenticated])
+def getCategory(request, pk):
+    category = Category.objects.get(pk=pk)
+    serializer = CategorySerializer(category, many=False)
+    return Response(serializer.data)
+
+
+
