@@ -1,10 +1,18 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import (Update,
+                      InlineKeyboardButton,
+                      InlineKeyboardMarkup,
+                      ReplyKeyboardMarkup,
+                      error
+                      )
 from telegram.ext import CallbackContext
 import logging
+import json
 from typing import Dict, List
 from telegram.keyboardbutton import KeyboardButton
+from bot.src.error import ButtonError
+from bot.utils.json_to_dict import json_to_dict
 
-from telegram.replykeyboardmarkup import ReplyKeyboardMarkup
+txt = json_to_dict('bot/assets/text.json')
 
 
 class Registration:
@@ -13,17 +21,24 @@ class Registration:
     """
 
     def __init__(self,
-                 languages_buttons: List[List[InlineKeyboardButton]
-                                         ] or List[List[KeyboardButton]]
+                 language_buttons: List[List[InlineKeyboardButton]
+                                        ] or List[List[KeyboardButton]]
                  = [
                      [InlineKeyboardButton(
                          "🇺🇿 Ўзбек тили", callback_data='uz')],
                      [InlineKeyboardButton("🇷🇺 Русский язык", callback_data='ru'),
                       InlineKeyboardButton("🇺🇸 English", callback_data='en')]
                  ],
-                 language_text: str = "Тилни танланг\nВыберите язык\nChoose the language",
-                 states: Dict = {},
-                 inline=True
+                 language_text: str = f"{txt['uz']['language']}\n{txt['ru']['language']}\n{txt['en']['language']}",
+                 inline=True,
+                 language: str = None,
+                 phone_text=txt["en"]["phone"],
+                 phone_button: List[InlineKeyboardButton] = [
+                     [KeyboardButton(
+                         txt["en"]["phone_button"],
+                         request_contact=True)]
+                 ],
+
                  ):
         """__init__ Initialize Registration configs
 
@@ -31,10 +46,12 @@ class Registration:
             languages (List[List[InlineKeyboardButton]], optional): This will parse the texts and return a list of buttons in your request. Defaults to [ [InlineKeyboardButton('Uzbek', callback_data='uz'), InlineKeyboardButton("English", callback_data='en')], [InlineKeyboardButton("Russian", callback_data='ru')] ].
             language_text (str, optional): This is text message that is sent out to the user with buttons attached. Defaults to "language".
         """
-        self.languages = languages_buttons
+        self.languages = language_buttons
         self.language_text = language_text
-        self.states = states
         self.inline = inline
+        self.phone_text = phone_text
+        self.phone_button = phone_button
+        self.language = language
 
     def request_language(self, update: Update, context: CallbackContext):
         """request_language sends a message to the user with buttons attached.
@@ -44,25 +61,45 @@ class Registration:
 
         Note: Passing list of 'KeyboardButton' type buttons requires `inline=False`
         """
+        state = "LANGUAGE"
         chat_id = update.effective_chat.id
-        logging.info(f"User {chat_id} is choosing a language")
-        if self.inline:
-            context.bot.send_message(chat_id,
-                                     self.language_text,
-                                     reply_markup=InlineKeyboardMarkup(self.languages))
-        else:
-            context.bot.send_message(chat_id,
-                                     self.language_text,
-                                     reply_markup=ReplyKeyboardMarkup(self.languages, resize_keyboard=True))
-        return self.states["LANGUAGE"]
+        logging.info(
+            f"User {chat_id} is choosing a language. Returning state: {state}")
+        try:
+            if self.inline:
+                context.bot.send_message(chat_id,
+                                         self.language_text,
+                                         reply_markup=InlineKeyboardMarkup(self.languages))
+            else:
+                context.bot.send_message(chat_id,
+                                         self.language_text,
+                                         reply_markup=ReplyKeyboardMarkup(self.languages, resize_keyboard=True))
+        except error.BadRequest:
+            raise ButtonError(
+                "Please set 'inline=False' if you are using KeyboardButton")
+        return state
 
     def get_language(self, update: Update, context: CallbackContext):
-        if update.message:
-            pass
-        elif update.callback_query:
-            pass
-        else:
-            pass
+        """get_language handles user input for chosen language
 
-    def do_something(self, update: Update, context: CallbackContext):
-        print("FINALLY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        Returns:
+            str: Returns callback_data if the buttons were type of InlineKeyboardButton, else returns string of chosen button type of KeyboardButton
+        """
+        if update.message:
+            return update.message.text
+        elif update.callback_query:
+            query = update.callback_query
+            query.answer()
+            query.delete_message()
+            return query.data
+
+    def request_phone(self, update: Update, context: CallbackContext):
+        chat_id = update.effective_chat.id
+        logging.info(
+            f"{chat_id} is being requested his phone number. Returning state: CONFIRMING_PHONE")
+        context.bot.send_message(chat_id=chat_id,
+                                 text=self.phone_text,
+                                 reply_markup=ReplyKeyboardMarkup(self.phone_button,
+                                                                  resize_keyboard=True),
+                                 parse_mode='HTML')
+        return "CONFIRMING_PHONE"
