@@ -7,123 +7,40 @@ from rest_framework.response import Response
 from .serializers import UserSerializer, CategorySerializer, ProductSerializer
 from django.http import Http404
 from rest_framework.views import APIView
+from rest_framework import generics
 
 @permission_classes([IsAuthenticated])
-class productsList(APIView):
-    
-    def get(self, request):
-       products = Product.objects.all()
-       serializer = ProductSerializer(products, many=True)
-       return Response(serializer.data)
+class productsList(generics.ListCreateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
-    def post(self, request):
-        serializer = ProductSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.error, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['GET',])
 @permission_classes([IsAuthenticated])
-def getUsers(request):
-    users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
-    return Response(serializer.data)
+class productDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
-@api_view(['GET',])
 @permission_classes([IsAuthenticated])
-def getUser(request, pk):
-    user = User.objects.get(user_id=pk)
-    serializer = UserSerializer(user, many=False)
-    return Response(serializer.data)
-
-
-
-# @api_view(['GET', 'POST'])
-# @permission_classes([IsAuthenticated])
-# def getProducts(request):
-#     if request.method == 'GET':
-#         products = Product.objects.all()
-#         serializer = ProductSerializer(products, many=True)
-#         return Response(serializer.data)
-
-#     elif request.method == 'POST':
-#         serializer = ProductSerializer(data=request.data)  
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)      
+class usersList(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 @permission_classes([IsAuthenticated])
-class productDetail(APIView):
-    
-    def get_object(self, pk):
-        try: 
-            return Product.objects.get(pk=pk)
-        except Product.DoesNotExist:
-            raise Http404
-    def get(self, request, pk, format=None):
-        product=self.get_object(pk)
-        serializer = ProductSerializer(product)
-        return Response(serializer.data)
-
-    def put(self, request, pk, format=None):
-        product = self.get_object(pk)
-        serializer = ProductSerializer(product, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    
-    def delete(self, request, pk, format=None):
-        product = self.get_object(pk)
-        product.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class userDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
-
-
-
-
-def getProduct(request, pk):
-
-    try:
-        product = Product.objects.get(pk=pk)
-    except Product.DoesNotExist:
-        return Response(status=status.status.HTTP_404_NOT_FOUND)
-
-
-    if request.method == 'GET':
-        serializer = ProductSerializer(product)
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        serializer = ProductSerializer(product, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)    
-
-    elif request.method == 'DELETE':
-        product.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-@api_view(['GET',])
 @permission_classes([IsAuthenticated])
-def getCategories(request):
-    categories = Category.objects.all()
-    serializer = CategorySerializer(categories, many=True)
-    return Response(serializer.data)
+class categoryList(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
-@api_view(['GET',])
+
 @permission_classes([IsAuthenticated])
-def getCategory(request, pk):
-    category = Category.objects.get(pk=pk)
-    serializer = CategorySerializer(category, many=False)
-    return Response(serializer.data)
+class categoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 
 
