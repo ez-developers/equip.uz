@@ -1,5 +1,5 @@
-from typing import Union, List
 from telegram import KeyboardButton
+from typing import Union, List
 
 
 def build_menu(

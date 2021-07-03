@@ -1,11 +1,11 @@
-import logging
 from telegram import ReplyKeyboardMarkup, Update, KeyboardButton
 from telegram.ext import CallbackContext
 from bot.utils.build_menu import build_menu
 from bot.src.order import Order
-from requests.auth import HTTPBasicAuth
 from bot.utils._reqs import parser
 from backend.settings import API_URL
+from requests.auth import HTTPBasicAuth
+import logging
 
 
 class Menu:

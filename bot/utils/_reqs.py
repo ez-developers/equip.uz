@@ -1,5 +1,5 @@
-import requests
 from requests.auth import HTTPBasicAuth
+import requests
 
 
 def parser(API_URL: str, key: str, API_auth: HTTPBasicAuth = None) -> list:
