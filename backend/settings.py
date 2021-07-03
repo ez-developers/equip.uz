@@ -29,7 +29,9 @@ SECRET_KEY = 'django-insecure-)t6k3=5ls23i)43)fik8n)p_g^05+u(xzw^#ll#fc#-h=d@&x!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '192.168.1.116'
+]
 
 
 # Application definition
@@ -84,16 +86,16 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': "telegram_bot",
+        'NAME': "equipuz_dev",
 
-        'USER': 'postgres',
+        'USER': 'jakhongir',
 
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'PASSWORD': 1234,
 
-        'HOST': 'localhost',
+        'HOST': '192.168.1.112',
 
         'PORT': '5432',
-}
+    }
 }
 
 
