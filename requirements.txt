@@ -4,10 +4,12 @@ attrs==21.2.0
 cachetools==4.2.2
 certifi==2021.5.30
 Django==3.2.4
+djangorestframework==3.12.4
 iniconfig==1.1.1
 packaging==20.9
 pip-autoremove==0.9.1
 pluggy==0.13.1
+psycopg2-binary==2.9.1
 py==1.10.0
 pyparsing==2.4.7
 pytest==6.2.4
