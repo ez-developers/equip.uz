@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)t6k3=5ls23i)43)fik8n)p_g^05+u(xzw^#ll#fc#-h=d@&x!'
+SECRET_KEY = os.getenv('DJANGO_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -88,9 +88,9 @@ DATABASES = {
 
         'NAME': "equipuz_dev",
 
-        'USER': 'jakhongir',
+        'USER': os.getenv('DATABASE_USER'),
 
-        'PASSWORD': 1234,
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
 
         'HOST': '192.168.1.112',
 
