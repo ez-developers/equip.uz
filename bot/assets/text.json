@@ -1,0 +1,19 @@
+{
+  "uz": {
+    "language": "Tilni tanlang",
+    "phone": ""
+  },
+  "ru": {
+    "language": "Выберите язык",
+    "phone": ""
+  },
+  "en": {
+    "language": "Choose a language",
+    "name": "Please enter your name",
+    "name_error": "Enter only one word",
+    "name_accepted": "Thank you, {}",
+    "phone": "Please send your phone number",
+    "phone_button": "Send my phone number",
+    "order_button": ""
+  }
+}
