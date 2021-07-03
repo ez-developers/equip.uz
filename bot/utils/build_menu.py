@@ -1,15 +1,14 @@
 from typing import Union, List
-from telegram import InlineKeyboardButton
+from telegram import KeyboardButton
 
 
 def build_menu(
-    buttons: List[InlineKeyboardButton],
+    buttons: List[KeyboardButton],
     n_cols: int,
-    header_buttons: Union[InlineKeyboardButton,
-                          List[InlineKeyboardButton]] = None,
-    footer_buttons: Union[InlineKeyboardButton,
-                          List[InlineKeyboardButton]] = None
-) -> List[List[InlineKeyboardButton]]:
+    header_buttons: Union[KeyboardButton,
+                          List[KeyboardButton]] = None,
+    footer_buttons: Union[KeyboardButton,
+                          List[KeyboardButton]] = None) -> List[List[KeyboardButton]]:
     menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
     if header_buttons:
         menu.insert(0, header_buttons if isinstance(
