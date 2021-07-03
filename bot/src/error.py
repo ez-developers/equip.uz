@@ -1,0 +1,4 @@
+
+
+class ButtonError(Exception):
+    pass
