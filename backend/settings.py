@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.1.116'
+    '192.168.1.116', '127.0.0.1', 'localhost'
 ]
 
 
@@ -88,7 +88,7 @@ DATABASES = {
 
         'NAME': "equipuz_dev",
 
-        'USER': os.getenv('DATABASE_USER'),
+        'USER': os.getenv('DATABASE_USERNAME'),
 
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
 
