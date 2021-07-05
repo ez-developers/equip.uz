@@ -5,16 +5,15 @@ from django.db import models
 
 class User(models.Model):
     class Meta:
-        verbose_name_plural = "Bot Users"
-        verbose_name = "Bot User"
+        verbose_name_plural = "Пользователи"
+        verbose_name = "Пользователь"
 
     user_id = models.IntegerField(primary_key=True)
     first_name = models.CharField(max_length=50, null=True, blank=False)
     last_name = models.CharField(max_length=50, null=True, blank=False)
     phone_number = models.BigIntegerField()
     username = models.CharField(max_length=20, null=True, blank=False)
-    language_code = models.CharField(max_length=2, null=True, blank=True)
-    # joined_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    joined_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -22,8 +21,8 @@ class User(models.Model):
 
 class Category(models.Model):
     class Meta:
-        verbose_name_plural = "Categories"
-        verbose_name = "Category"
+        verbose_name_plural = "Категории"
+        verbose_name = "Категория"
 
     name = models.CharField(max_length=255, null=True)
 
@@ -39,3 +38,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    verbose_name_plural = "Продукти"
+    verbose_name = "Продукт"
+
