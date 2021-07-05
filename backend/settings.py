@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
     '192.168.1.116', '127.0.0.1', 'localhost'
 ]
 
+API_URL = 'http://127.0.0.1:8000/api/'
 
 # Application definition
 
@@ -92,7 +93,7 @@ DATABASES = {
 
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
 
-        'HOST': '192.168.1.112',
+        'HOST': '192.168.1.111',
 
         'PORT': '5432',
     }
