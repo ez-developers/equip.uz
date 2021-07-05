@@ -14,19 +14,19 @@ button = j["buttons"]["menu"]
 
 class Menu:
     def __init__(self):
-        self.language = "en"
         self.menu_buttons = [
-            [KeyboardButton(button["order"][self.language])],
-            [KeyboardButton(button["contact"]['en']),
-             KeyboardButton(button["promo"]['en'])],
-            [KeyboardButton(button["settings"]['en'])]
+            [KeyboardButton(button["order"])],
+            [KeyboardButton(button["contact"]),
+             KeyboardButton(button["promo"])],
+            [KeyboardButton(button["settings"])]
         ]
 
     def display(self, update: Update, context: CallbackContext):
         state = "MENU_DISPLAYED"
         chat_id = update.effective_chat.id
 
-        context.bot.send_message(chat_id, "<b>Main menu</b>",
+        context.bot.send_message(chat_id,
+                                 f'<b>{text["main_page"]}</b>',
                                  reply_markup=ReplyKeyboardMarkup(
                                      self.menu_buttons, resize_keyboard=True),
                                  parse_mode='HTML')
@@ -36,44 +36,52 @@ class Menu:
 
     def categories(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
+        state = "CATEGORIES"
         buttons = parser(API_URL=API_URL + "categories/",
                          API_auth=HTTPBasicAuth('admin', 'admin'),
                          key='name')
 
-        context.bot.send_message(chat_id, "<b>Choose a category</b>",
+        context.bot.send_message(chat_id,
+                                 f'<b>{text["category"]}</b>',
                                  reply_markup=ReplyKeyboardMarkup(
                                      build_menu(
                                          buttons=[KeyboardButton(
                                              s) for s in buttons],
                                          n_cols=2,
                                          footer_buttons=[
-                                             KeyboardButton("Back")]
-
+                                             KeyboardButton(
+                                                 button["back"])]
                                      ), resize_keyboard=True
                                  ),
                                  parse_mode='HTML')
-        return "CATEGORIES"
+        logging.info(
+            f"User {chat_id} opened categories. Returned state: {state}")
+        return state
 
     def products(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
-
+        state = "PRODUCTS"
         buttons = parser(API_URL=API_URL + "products/",
                          API_auth=HTTPBasicAuth('admin', 'admin'),
                          key='name')
 
-        context.bot.send_message(chat_id, "<b>Choose a product</b>",
+        context.bot.send_message(chat_id,
+                                 f'<b>{text["product"]}</b>',
                                  reply_markup=ReplyKeyboardMarkup(
                                      build_menu(
                                          buttons=[KeyboardButton(
                                              s) for s in buttons],
                                          n_cols=1,
                                          footer_buttons=[
-                                             KeyboardButton("Back")]
+                                             KeyboardButton(
+                                                 button["back"])]
 
                                      ), resize_keyboard=True
                                  ),
                                  parse_mode='HTML')
-        return "PRODUCTS"
+        logging.info(
+            f"User {chat_id} opened products. Returned state: {state}")
+        return state
 
     def product_details(self, update: Update, context):
         update.effective_message.reply_text("Yes, you chose something")

@@ -1,33 +1,17 @@
 {
   "texts": {
-    "greeting": {
-      "uz": "",
-      "ru": "",
-      "en": ""
-    }
+    "greeting": "",
+    "main_page": "Главная страница",
+    "category": "Выберите категорию",
+    "product": "Выберите продукт"
   },
   "buttons": {
     "menu": {
-      "order": {
-        "uz": "Katalogni ko'rish",
-        "ru": "Просмотреть каталог",
-        "en": "See the catalog"
-      },
-      "contact": {
-        "uz": "Bog'lanish",
-        "ru": "Связаться",
-        "en": "Contact us"
-      },
-      "promo": {
-        "uz": "Aksiyalar",
-        "ru": "Акции",
-        "en": "Promotions"
-      },
-      "settings": {
-        "uz": "Sozlamalar",
-        "ru": "Настройки",
-        "en": "Settings"
-      }
+      "order": "Просмотреть каталог",
+      "contact": "Связаться",
+      "promo": "Акции",
+      "settings": "Настройки",
+      "back": "Назад"
     }
   }
 }

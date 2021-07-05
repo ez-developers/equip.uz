@@ -14,11 +14,14 @@ from bot.utils.build_menu import build_menu
 from bot.utils.filter import filterCategories, filterProducts
 import os
 import logging
+import json
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.DEBUG)
 
 menu = Menu()
+j = json.load(open("bot/assets/text.json", "r"))
+menu_buttons = j['buttons']['menu']
 
 
 def main():
@@ -34,14 +37,16 @@ def main():
         states={
             "MENU_DISPLAYED": [
                 MessageHandler(Filters.regex(
-                    "See the catalog"), menu.categories)
+                    menu_buttons["order"]), menu.categories)
             ],
             "CATEGORIES": [
-                MessageHandler(Filters.regex('Back'), menu.display),
+                MessageHandler(Filters.regex(
+                    menu_buttons["back"]), menu.display),
                 MessageHandler(filterCategories, menu.products)
             ],
             "PRODUCTS": [
-                MessageHandler(Filters.regex('Back'), menu.categories),
+                MessageHandler(Filters.regex(
+                    menu_buttons["back"]), menu.categories),
                 MessageHandler(filterProducts, menu.product_details)
             ]
         },
