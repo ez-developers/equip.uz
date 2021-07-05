@@ -1,19 +1,33 @@
 {
-  "uz": {
-    "language": "Tilni tanlang",
-    "phone": ""
+  "texts": {
+    "greeting": {
+      "uz": "",
+      "ru": "",
+      "en": ""
+    }
   },
-  "ru": {
-    "language": "Выберите язык",
-    "phone": ""
-  },
-  "en": {
-    "language": "Choose a language",
-    "name": "Please enter your name",
-    "name_error": "Enter only one word",
-    "name_accepted": "Thank you, {}",
-    "phone": "Please send your phone number",
-    "phone_button": "Send my phone number",
-    "order_button": ""
+  "buttons": {
+    "menu": {
+      "order": {
+        "uz": "Katalogni ko'rish",
+        "ru": "Просмотреть каталог",
+        "en": "See the catalog"
+      },
+      "contact": {
+        "uz": "Bog'lanish",
+        "ru": "Связаться",
+        "en": "Contact us"
+      },
+      "promo": {
+        "uz": "Aksiyalar",
+        "ru": "Акции",
+        "en": "Promotions"
+      },
+      "settings": {
+        "uz": "Sozlamalar",
+        "ru": "Настройки",
+        "en": "Settings"
+      }
+    }
   }
 }

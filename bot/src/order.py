@@ -1,7 +1,10 @@
-import requests
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import CallbackContext
-# from bot.utils.build_menu import build_menu
+from telegram.keyboardbutton import KeyboardButton
+from bot.utils.build_menu import build_menu
+from requests.auth import HTTPBasicAuth
+from bot.utils._reqs import parser
+from backend.settings import API_URL
 
 
 class Order:
@@ -9,30 +12,22 @@ class Order:
     def __init__(self):
         pass
 
-    def category_menu(self, update: Update, context: CallbackContext):
+    @staticmethod
+    def categories(update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
+        buttons = parser(API_URL=API_URL + "categories/",
+                         API_auth=HTTPBasicAuth('admin', 'admin'),
+                         key='name')
 
-        # context.bot.send_message(chat_id, "<b>Main menu</b>",
-        #                          reply_markup=ReplyKeyboardMarkup(
-        #                              (), resize_keyboard=True),
-        #                          parse_mode='HTML')
+        context.bot.send_message(chat_id, "<b>Choose a category</b>",
+                                 reply_markup=ReplyKeyboardMarkup(
+                                     build_menu(
+                                         buttons=[KeyboardButton(
+                                             s) for s in buttons],
+                                         n_cols=2,
+                                         footer_buttons=[
+                                             KeyboardButton("Back")]
 
-
-headers = {
-    "Content-Type": "application/json",
-    "Authorization": "Basic YWRtaW46TnVyaWRkaW5Jc2xhbW92MTIzNA=="
-}
-x = requests.get("http://localhost:8000/api/products/", headers=headers)
-print(x.json())
-
-body = {
-    "name": "Торвотру",
-    "description": "Очень классная девушка",
-    "price": "1.12",
-    "category": 1
-}
-
-y = requests.post("http://localhost:8000/api/products/",
-                  headers=headers, json=body)
-print(y.json())
-print(y.status_code)
+                                     )
+                                 ),
+                                 parse_mode='HTML')

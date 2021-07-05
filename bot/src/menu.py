@@ -1,19 +1,25 @@
 from telegram import ReplyKeyboardMarkup, Update, KeyboardButton
 from telegram.ext import CallbackContext
 from bot.utils.build_menu import build_menu
-from bot.src.order import Order
 from bot.utils._reqs import parser
 from backend.settings import API_URL
 from requests.auth import HTTPBasicAuth
 import logging
+import json
+
+j = json.load(open("bot/assets/text.json", "r"))
+text = j["texts"]
+button = j["buttons"]["menu"]
 
 
 class Menu:
     def __init__(self):
+        self.language = "en"
         self.menu_buttons = [
-            [KeyboardButton("Start shopping")],
-            [KeyboardButton("Contact us"), KeyboardButton("Sales")],
-            [KeyboardButton("Settings")]
+            [KeyboardButton(button["order"][self.language])],
+            [KeyboardButton(button["contact"]['en']),
+             KeyboardButton(button["promo"]['en'])],
+            [KeyboardButton(button["settings"]['en'])]
         ]
 
     def display(self, update: Update, context: CallbackContext):
@@ -60,7 +66,7 @@ class Menu:
                                      build_menu(
                                          buttons=[KeyboardButton(
                                              s) for s in buttons],
-                                         n_cols=2,
+                                         n_cols=1,
                                          footer_buttons=[
                                              KeyboardButton("Back")]
 

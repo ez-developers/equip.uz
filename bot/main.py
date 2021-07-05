@@ -34,7 +34,7 @@ def main():
         states={
             "MENU_DISPLAYED": [
                 MessageHandler(Filters.regex(
-                    "Start shopping"), menu.categories)
+                    "See the catalog"), menu.categories)
             ],
             "CATEGORIES": [
                 MessageHandler(Filters.regex('Back'), menu.display),
