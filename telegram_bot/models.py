@@ -39,6 +39,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-    verbose_name_plural = "Продукти"
-    verbose_name = "Продукт"
+    class Meta:
+        verbose_name_plural = "Продукты"
+        verbose_name = "Продукт"
 
