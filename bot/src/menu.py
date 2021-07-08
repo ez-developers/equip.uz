@@ -6,10 +6,18 @@ from backend.settings import API_URL
 from requests.auth import HTTPBasicAuth
 import logging
 import json
+import dotenv
+import os
+import requests
+
 
 j = json.load(open("bot/assets/text.json", "r"))
 text = j["texts"]
 button = j["buttons"]["menu"]
+
+dotenv.load_dotenv()
+api_auth = HTTPBasicAuth(os.getenv("REST_API_USERNAME"),
+                         os.getenv("REST_API_PASSWORD"))
 
 
 class Menu:
@@ -38,7 +46,7 @@ class Menu:
         chat_id = update.effective_chat.id
         state = "CATEGORIES"
         buttons = parser(API_URL=API_URL + "categories/",
-                         API_auth=HTTPBasicAuth('admin', 'admin'),
+                         API_auth=api_auth,
                          key='name')
 
         context.bot.send_message(chat_id,
@@ -61,9 +69,11 @@ class Menu:
     def products(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
         state = "PRODUCTS"
-        buttons = parser(API_URL=API_URL + "products/",
-                         API_auth=HTTPBasicAuth('admin', 'admin'),
-                         key='name')
+        raw_buttons = parser(API_URL=API_URL + "products/",
+                             API_auth=api_auth,
+                             key='name')
+        print(requests.get(url=API_URL + "products/", auth=api_auth).json())
+        buttons = raw_buttons
 
         context.bot.send_message(chat_id,
                                  f'<b>{text["product"]}</b>',
