@@ -11,7 +11,7 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ("name", )
 
 
 @admin.register(Product)
@@ -19,4 +19,5 @@ class ProductAdmin(admin.ModelAdmin):
     
     list_display = ('name', 'colored_price', 'colored_category')
     list_filter = ("category", )
+    search_fields = ("name", )
 
