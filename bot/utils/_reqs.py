@@ -5,8 +5,8 @@ import dotenv
 import os
 
 dotenv.load_dotenv()
-auth = (os.getenv('REST_API_USERNAME'),
-        os.getenv('REST_API_PASSWORD'))
+auth = HTTPBasicAuth(os.getenv('REST_API_USERNAME'),
+                     os.getenv('REST_API_PASSWORD'))
 
 
 def parser(API_URL: str, key: str, API_auth: HTTPBasicAuth = None) -> list:

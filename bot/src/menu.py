@@ -3,21 +3,13 @@ from telegram.ext import CallbackContext
 from bot.utils.build_menu import build_menu
 from bot.utils._reqs import parser, target_category_id, products_list, product_details
 from backend.settings import API_URL
-from requests.auth import HTTPBasicAuth
+from bot.utils._reqs import auth
 import logging
 import json
-import dotenv
-import os
-import requests
-
 
 j = json.load(open("bot/assets/text.json", "r"))
 text = j["texts"]
 button = j["buttons"]["menu"]
-
-dotenv.load_dotenv()
-api_auth = HTTPBasicAuth(os.getenv("REST_API_USERNAME"),
-                         os.getenv("REST_API_PASSWORD"))
 
 
 class Menu:
@@ -46,7 +38,7 @@ class Menu:
         chat_id = update.effective_chat.id
         state = "CATEGORIES"
         buttons = parser(API_URL=API_URL + "categories/",
-                         API_auth=api_auth,
+                         API_auth=auth,
                          key='name')
 
         context.bot.send_message(chat_id,
