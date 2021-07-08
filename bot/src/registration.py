@@ -29,13 +29,12 @@ class Registration:
                      [InlineKeyboardButton("🇷🇺 Русский язык", callback_data='ru'),
                       InlineKeyboardButton("🇺🇸 English", callback_data='en')]
                  ],
-                 language_text: str = f"{txt['uz']['language']}\n{txt['ru']['language']}\n{txt['en']['language']}",
                  inline=True,
                  language: str = None,
-                 phone_text=txt["en"]["phone"],
+                 phone_text="Please provide your phone number",
                  phone_button: List[InlineKeyboardButton] = [
                      [KeyboardButton(
-                         txt["en"]["phone_button"],
+                         "Send my phone",
                          request_contact=True)]
                  ],
 
@@ -47,7 +46,6 @@ class Registration:
             language_text (str, optional): This is text message that is sent out to the user with buttons attached. Defaults to "language".
         """
         self.languages = language_buttons
-        self.language_text = language_text
         self.inline = inline
         self.phone_text = phone_text
         self.phone_button = phone_button
@@ -68,11 +66,11 @@ class Registration:
         try:
             if self.inline:
                 context.bot.send_message(chat_id,
-                                         self.language_text,
+                                         "Choose a language Please",
                                          reply_markup=InlineKeyboardMarkup(self.languages))
             else:
                 context.bot.send_message(chat_id,
-                                         self.language_text,
+                                         "Choose a language Please",
                                          reply_markup=ReplyKeyboardMarkup(self.languages, resize_keyboard=True))
         except error.BadRequest:
             raise ButtonError(
@@ -92,6 +90,15 @@ class Registration:
             query.answer()
             query.delete_message()
             return query.data
+
+    def request_name(self, update: Update, context: CallbackContext):
+        chat_id = update.effective_chat.id
+        state = "NAME"
+        context.bot.send_message(chat_id,
+                                 "Hi there! Amma bot for providing you with the best products ever\n\n WHAT IS YOUR NAME?")
+        logging.info(
+            f"User {chat_id} has been greeted and  requested name. Returning state {state}")
+        return state
 
     def request_phone(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
