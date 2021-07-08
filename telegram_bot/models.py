@@ -7,6 +7,7 @@ class User(models.Model):
     class Meta:
         verbose_name_plural = "Пользователи"
         verbose_name = "Пользователь"
+        managed = False
 
     user_id = models.IntegerField(primary_key=True)
     first_name = models.CharField(max_length=50, null=True, blank=False)
@@ -16,7 +17,7 @@ class User(models.Model):
     joined_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.first_name + " " + self.last_name
 
 
 class Category(models.Model):
