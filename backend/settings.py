@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.1.116', '127.0.0.1', 'localhost'
+    '192.168.1.107', '127.0.0.1', 'localhost'
 ]
 
 API_URL = 'http://127.0.0.1:8000/api/'
@@ -143,4 +143,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-

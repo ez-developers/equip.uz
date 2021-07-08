@@ -1,6 +1,6 @@
 from django.db import models
-
-# Create your models here.
+from django.contrib import admin 
+from django.utils.html import format_html
 
 
 class User(models.Model):
@@ -16,7 +16,7 @@ class User(models.Model):
     joined_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.last_name}, {self.first_name}"
 
 
 class Category(models.Model):
@@ -35,11 +35,28 @@ class Product(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    
+    @admin.display
+    def colored_price(self):
+        return format_html(
+            '<span style="font-weight:bold; color:#FFA500;">{}</span>',
+            self.price,
+        )
+        
 
-    def __str__(self):
-        return self.name
-
+    @admin.display
+    def colored_category(self):
+        return format_html(
+            '<b>{}</b>',
+            self.category,
+        )
+    
+    
     class Meta:
         verbose_name_plural = "Продукты"
         verbose_name = "Продукт"
 
+    def __str__(self):
+        return self.name
+
+    
