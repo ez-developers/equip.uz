@@ -1,7 +1,7 @@
 from telegram import ReplyKeyboardMarkup, Update, KeyboardButton
 from telegram.ext import CallbackContext
 from bot.utils.build_menu import build_menu
-from bot.utils._reqs import parser
+from bot.utils._reqs import parser, target_category_id, products_list, product_details
 from backend.settings import API_URL
 from requests.auth import HTTPBasicAuth
 import logging
@@ -68,12 +68,9 @@ class Menu:
 
     def products(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
+        target_id = target_category_id(update.message.text)
         state = "PRODUCTS"
-        raw_buttons = parser(API_URL=API_URL + "products/",
-                             API_auth=api_auth,
-                             key='name')
-        print(requests.get(url=API_URL + "products/", auth=api_auth).json())
-        buttons = raw_buttons
+        buttons = products_list(target_id)
 
         context.bot.send_message(chat_id,
                                  f'<b>{text["product"]}</b>',
@@ -93,5 +90,15 @@ class Menu:
             f"User {chat_id} opened products. Returned state: {state}")
         return state
 
-    def product_details(self, update: Update, context):
-        update.effective_message.reply_text("Yes, you chose something")
+    def product_details(self, update: Update, context: CallbackContext):
+        chat_id = update.effective_chat.id
+        requested_product = update.message.text
+        product = product_details(requested_product)
+        context.bot.send_message(chat_id,
+                                 f"""<b>{product['name']}</b>
+                                 
+<b>Описание:</b>
+{product['description']}
+                                 
+<b>Цена:</b>
+{product["price"]}""", parse_mode='HTML')
