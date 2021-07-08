@@ -20,26 +20,29 @@ class User(models.Model):
 
 
 class Category(models.Model):
+    name = models.CharField(
+        verbose_name="Название категории", max_length=255, null=True)
+
     class Meta:
         verbose_name_plural = "Категории"
-        verbose_name = "Категория"
-
-    name = models.CharField(max_length=255, null=True)
+        verbose_name = "Категорию"
 
     def __str__(self):
         return self.name
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.TextField()
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
+    name = models.CharField(
+        verbose_name="Название продукта", max_length=255, null=True)
+    description = models.TextField(verbose_name="Описание", null=True)
+    price = models.DecimalField(
+        verbose_name="Цена", max_digits=6, decimal_places=2, null=True)
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, verbose_name="Категория", null=True)
 
     class Meta:
         verbose_name_plural = "Продукты"
         verbose_name = "Продукт"
 
+    def __str__(self):
+        return self.name
