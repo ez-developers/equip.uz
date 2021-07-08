@@ -30,10 +30,10 @@ SECRET_KEY = os.getenv('DJANGO_SECRET')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.1.116', '127.0.0.1', 'localhost'
+    '192.168.1.116', '127.0.0.1', 'localhost', '192.168.1.105'
 ]
 
-API_URL = 'http://127.0.0.1:8000/api/'
+API_URL = 'http://192.168.1.105:8000/api/'
 
 # Application definition
 
@@ -47,6 +47,13 @@ INSTALLED_APPS = [
     'telegram_bot',
     'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -124,7 +131,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
@@ -143,4 +150,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
