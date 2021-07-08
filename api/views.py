@@ -23,27 +23,13 @@ class productsList(APIView):
 
 
 @permission_classes([IsAuthenticated])
-class ProductsListView(APIView):
-    """
-    A view that returns the count of active users in JSON.
-    """
+class usersList(APIView):
 
-    def get(self, request, format=None):
-        products = Product.objects.all()
-        data = serializers.serialize('json', products)
-        return HttpResponse(data, content_type="application/json")
+    def get(self, request, *args, **kwargs):
+        queryset = User.objects.all()
+        serializer = UserSerializer(queryset, many=True)
 
-
-@permission_classes([IsAuthenticated])
-class productDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-
-
-@permission_classes([IsAuthenticated])
-class usersList(generics.ListCreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+        return HttpResponse(JSONRenderer().render(serializer.data), content_type='application/json')
 
 
 @permission_classes([IsAuthenticated])
@@ -53,12 +39,10 @@ class userDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 @permission_classes([IsAuthenticated])
-class categoryList(generics.ListCreateAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+class cateogriesList(APIView):
 
+    def get(self, request, *args, **kwargs):
+        queryset = Category.objects.all()
+        serializer = CategorySerializer(queryset, many=True)
 
-@permission_classes([IsAuthenticated])
-class categoryDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+        return HttpResponse(JSONRenderer().render(serializer.data), content_type='application/json')
