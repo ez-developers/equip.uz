@@ -1,9 +1,8 @@
 from telegram import ReplyKeyboardMarkup, Update, KeyboardButton
 from telegram.ext import CallbackContext
 from bot.utils.build_menu import build_menu
-from bot.utils._reqs import parser
-from backend.settings import API_URL
-from requests.auth import HTTPBasicAuth
+from bot.utils._reqs import parser, target_category_id, products_list, product_details
+from backend.settings import API_URL, API_AUTHENTICATION
 import logging
 import json
 
@@ -38,7 +37,7 @@ class Menu:
         chat_id = update.effective_chat.id
         state = "CATEGORIES"
         buttons = parser(API_URL=API_URL + "categories/",
-                         API_auth=HTTPBasicAuth('admin', 'admin'),
+                         API_auth=API_AUTHENTICATION,
                          key='name')
 
         context.bot.send_message(chat_id,
@@ -60,10 +59,9 @@ class Menu:
 
     def products(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
+        target_id = target_category_id(update.message.text)
         state = "PRODUCTS"
-        buttons = parser(API_URL=API_URL + "products/",
-                         API_auth=HTTPBasicAuth('admin', 'admin'),
-                         key='name')
+        buttons = products_list(target_id)
 
         context.bot.send_message(chat_id,
                                  f'<b>{text["product"]}</b>',
@@ -83,5 +81,15 @@ class Menu:
             f"User {chat_id} opened products. Returned state: {state}")
         return state
 
-    def product_details(self, update: Update, context):
-        update.effective_message.reply_text("Yes, you chose something")
+    def product_details(self, update: Update, context: CallbackContext):
+        chat_id = update.effective_chat.id
+        requested_product = update.message.text
+        product = product_details(requested_product)
+        context.bot.send_message(chat_id,
+                                 f"""<b>{product['name']}</b>
+                                 
+<b>Описание:</b>
+{product['description']}
+                                 
+<b>Цена:</b>
+{product["price"]}""", parse_mode='HTML')

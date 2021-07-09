@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv
+from requests.auth import HTTPBasicAuth
 import os
 
 
@@ -30,10 +31,12 @@ SECRET_KEY = os.getenv('DJANGO_SECRET')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.1.107', '127.0.0.1', 'localhost'
+    '192.168.1.116', '127.0.0.1', 'localhost', '192.168.1.105'
 ]
 
-API_URL = 'http://127.0.0.1:8000/api/'
+API_URL = 'http://192.168.1.105:8000/api/'
+API_AUTHENTICATION = HTTPBasicAuth(os.getenv('REST_API_USERNAME'),
+                                   os.getenv('REST_API_PASSWORD'))
 
 # Application definition
 
@@ -48,6 +51,12 @@ INSTALLED_APPS = [
     'telegram_bot',
     'rest_framework',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer'
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,7 +73,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates"),],
+        'DIRS': [os.path.join(BASE_DIR, "templates"), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -125,7 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
