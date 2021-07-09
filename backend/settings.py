@@ -41,6 +41,7 @@ API_AUTHENTICATION = HTTPBasicAuth(os.getenv('REST_API_USERNAME'),
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_black.apps.AdminBlackConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -72,7 +73,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates"), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

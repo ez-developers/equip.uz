@@ -1,6 +1,6 @@
 from django.db import models
-
-# Create your models here.
+from django.contrib import admin
+from django.utils.html import format_html
 
 
 class User(models.Model):
@@ -40,6 +40,20 @@ class Product(models.Model):
         verbose_name="Цена", max_digits=6, decimal_places=2, null=True)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, verbose_name="Категория", null=True)
+
+    @admin.display
+    def colored_price(self):
+        return format_html(
+            '<span style="font-weight:bold; color:#FFA500;">{}</span>',
+            self.price,
+        )
+
+    @admin.display
+    def colored_category(self):
+        return format_html(
+            '<b>{}</b>',
+            self.category,
+        )
 
     class Meta:
         verbose_name_plural = "Продукты"
