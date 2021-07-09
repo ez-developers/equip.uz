@@ -1,9 +1,11 @@
 from django.contrib import admin
 from .models import User, Category, Product
 from django.utils.html import format_html
+from django.contrib.admin import AdminSite
 
 # Register your models here.
-
+class MyAdminSite(AdminSite):
+    site_header = 'Equip.uz'
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
