@@ -10,14 +10,14 @@ class User(models.Model):
         managed = False
 
     user_id = models.IntegerField(primary_key=True)
-    first_name = models.CharField(max_length=50, null=True, blank=False)
-    last_name = models.CharField(max_length=50, null=True, blank=False)
-    phone_number = models.BigIntegerField()
+    first_name = models.CharField(max_length=50, null=False, blank=False)
+    last_name = models.CharField(max_length=50, null=False, blank=False)
+    phone_number = models.BigIntegerField(null=True, blank=False)
     username = models.CharField(max_length=20, null=True, blank=False)
     joined_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
-        return self.first_name + " " + self.last_name
+        return str(self.user_id)
 
 
 class Category(models.Model):
