@@ -2,15 +2,13 @@ from telegram import (Update,
                       InlineKeyboardButton,
                       InlineKeyboardMarkup,
                       ReplyKeyboardMarkup,
-                      error
-                      )
+                      ReplyKeyboardRemove,
+                      error)
 from telegram.ext import CallbackContext
-import logging
-import json
-from typing import Dict, List
-from telegram.keyboardbutton import KeyboardButton
-from bot.src.error import ButtonError
+from backend.settings import API_URL, API_AUTHENTICATION
 from bot.utils.json_to_dict import json_to_dict
+import logging
+import requests
 
 txt = json_to_dict('bot/assets/text.json')
 
@@ -20,76 +18,30 @@ class Registration:
     Base class for registration
     """
 
-    def __init__(self,
-                 language_buttons: List[List[InlineKeyboardButton]
-                                        ] or List[List[KeyboardButton]]
-                 = [
-                     [InlineKeyboardButton(
-                         "🇺🇿 Ўзбек тили", callback_data='uz')],
-                     [InlineKeyboardButton("🇷🇺 Русский язык", callback_data='ru'),
-                      InlineKeyboardButton("🇺🇸 English", callback_data='en')]
-                 ],
-                 inline=True,
-                 language: str = None,
-                 phone_text="Please provide your phone number",
-                 phone_button: List[InlineKeyboardButton] = [
-                     [KeyboardButton(
-                         "Send my phone",
-                         request_contact=True)]
-                 ],
+    def is_private_chat(self, chat_id: int):
+        if chat_id > 0:
+            return True
+        else:
+            return False
 
-                 ):
-        """__init__ Initialize Registration configs
-
-        Args:
-            languages (List[List[InlineKeyboardButton]], optional): This will parse the texts and return a list of buttons in your request. Defaults to [ [InlineKeyboardButton('Uzbek', callback_data='uz'), InlineKeyboardButton("English", callback_data='en')], [InlineKeyboardButton("Russian", callback_data='ru')] ].
-            language_text (str, optional): This is text message that is sent out to the user with buttons attached. Defaults to "language".
-        """
-        self.languages = language_buttons
-        self.inline = inline
-        self.phone_text = phone_text
-        self.phone_button = phone_button
-        self.language = language
-
-    def request_language(self, update: Update, context: CallbackContext):
-        """request_language sends a message to the user with buttons attached.
-
-        Args:
-            inline (bool, optional): Choose whether buttons are inline or not. Defaults to True.
-
-        Note: Passing list of 'KeyboardButton' type buttons requires `inline=False`
-        """
-        state = "LANGUAGE"
+    def start(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
-        logging.info(
-            f"User {chat_id} is choosing a language. Returning state: {state}")
-        try:
-            if self.inline:
-                context.bot.send_message(chat_id,
-                                         "Choose a language Please",
-                                         reply_markup=InlineKeyboardMarkup(self.languages))
+        if self.is_private_chat(chat_id):
+            all_users = []
+            user_objects = requests.get(API_URL + 'users/',
+                                        auth=API_AUTHENTICATION).json()
+            for i in user_objects:
+                all_users.append(i["user_id"])
+            if chat_id in all_users:
+                user = requests.get(API_URL + f'users/{chat_id}',
+                                    auth=API_AUTHENTICATION).json()
+                print(user)
+                update.effective_message.reply_text(
+                    "User exists", reply_markup=ReplyKeyboardRemove())
             else:
-                context.bot.send_message(chat_id,
-                                         "Choose a language Please",
-                                         reply_markup=ReplyKeyboardMarkup(self.languages, resize_keyboard=True))
-        except error.BadRequest:
-            raise ButtonError(
-                "Please set 'inline=False' if you are using KeyboardButton")
-        return state
-
-    def get_language(self, update: Update, context: CallbackContext):
-        """get_language handles user input for chosen language
-
-        Returns:
-            str: Returns callback_data if the buttons were type of InlineKeyboardButton, else returns string of chosen button type of KeyboardButton
-        """
-        if update.message:
-            return update.message.text
-        elif update.callback_query:
-            query = update.callback_query
-            query.answer()
-            query.delete_message()
-            return query.data
+                return True
+        else:
+            pass  # The bot is working in the group.
 
     def request_name(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
