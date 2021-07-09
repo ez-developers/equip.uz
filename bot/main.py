@@ -4,13 +4,11 @@ from telegram.ext import (Updater,
                           MessageHandler,
                           Filters,
                           CallbackQueryHandler,
-                          Defaults,
                           CallbackContext,)
-from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
 from dotenv import load_dotenv
-from bot.utils.json_to_dict import json_to_dict
 from bot.src.menu import Menu
-from bot.utils.build_menu import build_menu
+from bot.src.registration import Registration
+from bot.src.commands import Command
 from bot.utils.filter import filterCategories, filterProducts
 import os
 import logging
@@ -20,13 +18,14 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.DEBUG)
 
 menu = Menu()
+registration = Registration()
+commands = Command()
 j = json.load(open("bot/assets/text.json", "r"))
 menu_buttons = j['buttons']['menu']
 
 
 def main():
     load_dotenv()
-    # defaults = Defaults(parse_mode="HTML", disable_notification=True)
     updater = Updater(token=os.getenv('API_TOKEN'))
     dispatcher = updater.dispatcher
 
