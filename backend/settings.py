@@ -28,10 +28,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
-    '192.168.1.116', '127.0.0.1', 'localhost', '192.168.1.105'
+    '192.168.1.107', '127.0.0.1', 'localhost', '192.168.1.105'
 ]
 
 API_URL = 'http://192.168.1.105:8000/api/'
@@ -41,7 +41,6 @@ API_AUTHENTICATION = HTTPBasicAuth(os.getenv('REST_API_USERNAME'),
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_black.apps.AdminBlackConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
