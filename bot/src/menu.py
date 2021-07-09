@@ -2,8 +2,7 @@ from telegram import ReplyKeyboardMarkup, Update, KeyboardButton
 from telegram.ext import CallbackContext
 from bot.utils.build_menu import build_menu
 from bot.utils._reqs import parser, target_category_id, products_list, product_details
-from backend.settings import API_URL
-from bot.utils._reqs import auth
+from backend.settings import API_URL, API_AUTHENTICATION
 import logging
 import json
 
@@ -38,7 +37,7 @@ class Menu:
         chat_id = update.effective_chat.id
         state = "CATEGORIES"
         buttons = parser(API_URL=API_URL + "categories/",
-                         API_auth=auth,
+                         API_auth=API_AUTHENTICATION,
                          key='name')
 
         context.bot.send_message(chat_id,
