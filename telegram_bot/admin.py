@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import User, Category, Product
 
 # Register your models here.
-admin.site.url = None
+admin.site.site_url = None
 admin.site.index_title = "Добро пожаловать!"
 admin.site.site_title = "Администрация «Equip Uz»"
 admin.site.site_header = "Администрация «Equip Uz»"
