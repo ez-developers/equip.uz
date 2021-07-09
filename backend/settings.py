@@ -68,6 +68,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'backend.urls'
+ROOT_HOSTCONF = 'telegram_bot.hosts'
 
 TEMPLATES = [
     {
