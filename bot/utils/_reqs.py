@@ -1,12 +1,7 @@
 from requests.auth import HTTPBasicAuth
 from backend.settings import API_URL
 import requests
-import dotenv
-import os
-
-dotenv.load_dotenv()
-auth = HTTPBasicAuth(os.getenv('REST_API_USERNAME'),
-                     os.getenv('REST_API_PASSWORD'))
+from backend.settings import API_AUTHENTICATION
 
 
 def parser(API_URL: str, key: str, API_auth: HTTPBasicAuth = None) -> list:
@@ -20,7 +15,7 @@ def parser(API_URL: str, key: str, API_auth: HTTPBasicAuth = None) -> list:
 
 def target_category_id(category_name: str) -> int:
     response = requests.get(API_URL + 'categories/',
-                            auth=auth)
+                            auth=API_AUTHENTICATION)
     for i in response.json():
         if i["name"] == category_name:
             return i["id"]
@@ -29,7 +24,7 @@ def target_category_id(category_name: str) -> int:
 def products_list(category_id: int) -> list:
     output = []
     all_products = requests.get(API_URL + 'products/',
-                                auth=auth).json()
+                                auth=API_AUTHENTICATION).json()
     for i in all_products:
         if i['category'] == category_id:
             output.append(i['name'])
@@ -38,7 +33,7 @@ def products_list(category_id: int) -> list:
 
 def product_details(product_name: str) -> dict:
     response = requests.get(API_URL + 'products/',
-                            auth=auth).json()
+                            auth=API_AUTHENTICATION).json()
     for product in response:
         if product['name'] == product_name:
             return product

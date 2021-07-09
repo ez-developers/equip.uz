@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from dotenv import load_dotenv
+from requests.auth import HTTPBasicAuth
 import os
 
 
@@ -34,6 +35,8 @@ ALLOWED_HOSTS = [
 ]
 
 API_URL = 'http://192.168.1.105:8000/api/'
+API_AUTHENTICATION = HTTPBasicAuth(os.getenv('REST_API_USERNAME'),
+                                   os.getenv('REST_API_PASSWORD'))
 
 # Application definition
 
