@@ -9,10 +9,10 @@ class User(models.Model):
         verbose_name = "Пользователь"
         managed = False
 
-    user_id = models.IntegerField(primary_key=True)
-    first_name = models.CharField(max_length=50, null=False, blank=False)
-    last_name = models.CharField(max_length=50, null=False, blank=False)
-    phone_number = models.BigIntegerField(null=True, blank=False)
+    user_id = models.BigIntegerField(primary_key=True)
+    first_name = models.CharField(max_length=30, null=False, blank=False)
+    last_name = models.CharField(max_length=30, null=False, blank=False)
+    phone_number = models.CharField(max_length=9, null=True, blank=False)
     username = models.CharField(max_length=20, null=True, blank=False)
     joined_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
