@@ -8,7 +8,6 @@ from telegram.ext import (Updater,
 from dotenv import load_dotenv
 from bot.src.menu import Menu
 from bot.src.registration import Registration
-from bot.src.commands import Command
 from bot.utils.filter import filterCategories, filterProducts
 import os
 import logging
@@ -19,7 +18,6 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 menu = Menu()
 registration = Registration()
-commands = Command()
 j = json.load(open("bot/assets/text.json", "r"))
 menu_buttons = j['buttons']['menu']
 
@@ -31,7 +29,7 @@ def main():
 
     conversation = ConversationHandler(
         entry_points=[
-            CommandHandler('start', menu.display)
+            CommandHandler('start', registration.start)
         ],
         states={
             "MENU_DISPLAYED": [
