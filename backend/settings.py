@@ -38,7 +38,6 @@ API_URL = 'http://127.0.0.1:8000/api/'
 # Application definition
 
 INSTALLED_APPS = [
-    'admin_black.apps.AdminBlackConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
