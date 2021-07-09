@@ -30,10 +30,10 @@ SECRET_KEY = os.getenv('DJANGO_SECRET')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '192.168.1.116', '127.0.0.1', 'localhost', '192.168.1.105'
+    '192.168.1.116', '127.0.0.1', 'localhost', '192.168.1.105', 'api.localhost',
 ]
 
-API_URL = 'http://192.168.1.105:8000/api/'
+API_URL = 'http://api.192.168.1.105:8000/'
 
 # Application definition
 
