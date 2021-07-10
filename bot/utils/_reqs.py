@@ -4,6 +4,12 @@ import requests
 from backend.settings import API_AUTHENTICATION
 
 
+def get(API_ENDPOINT: str = None):
+    return requests.get(
+        API_URL + API_ENDPOINT + '/', auth=API_AUTHENTICATION
+    ).json()
+
+
 def parser(API_URL: str, key: str, API_auth: HTTPBasicAuth = None) -> list:
     custom_list = []
     obj = requests.get(API_URL, auth=API_auth).json()
