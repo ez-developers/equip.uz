@@ -1,5 +1,0 @@
-<li>
-    {% url opts|admin_urlname:'history' original.pk|admin_urlquote as history_url %}
-    <a href="{% add_preserved_filters history_url %}" class="historylink">{% trans "History" %}</a>
-</li>
-# TODO: This code is not working. It is supposed to remove "History" button in the admin interface.
