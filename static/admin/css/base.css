@@ -1,11 +1,13 @@
-
+/*
+    DJANGO Admin styles
+*/
 
 @import url(fonts.css);
 
 /* VARIABLE DEFINITIONS */
 :root {
-  --primary: #25023a;
-  --secondary: #6100e0;
+  --primary: #000000;
+  --secondary: #000000;
   --accent: #f5dd5d;
   --primary-fg: #fff;
 
