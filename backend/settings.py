@@ -34,6 +34,7 @@ ALLOWED_HOSTS = [
     '192.168.1.107', '127.0.0.1', 'localhost', '192.168.1.105'
 ]
 
+SMS_API_URL = "http://91.204.239.44/broker-api/send"
 API_URL = 'http://192.168.1.105:8000/api/'
 API_AUTHENTICATION = HTTPBasicAuth(os.getenv('REST_API_USERNAME'),
                                    os.getenv('REST_API_PASSWORD'))
