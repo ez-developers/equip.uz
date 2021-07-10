@@ -7,6 +7,7 @@ from telegram import (Update,
 from telegram.ext import CallbackContext
 from telegram.keyboardbutton import KeyboardButton
 from backend.settings import API_URL, API_AUTHENTICATION
+from bot.src.menu import Menu
 from bot.utils._reqs import get
 from bot.utils.json_to_dict import json_to_dict
 from bot.utils.sms_api import send_sms, sms_text
@@ -61,7 +62,7 @@ class Registration:
         if user['phone_number'] is None:
             return self.request_name(update, context)
         else:
-            print("WE HAVE USER PHONE >>> MAIN MENU")
+            return Menu().display(update, context)
 
     def request_name(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
@@ -173,15 +174,16 @@ class Registration:
 
         try:
             if int(user_input) == context.user_data['sms_code']:
-                payload = {
-                    "phone_number": user_input
-                }
-                requests.put(API_URL + 'users/{chat_id}',
+                user = get(f'users/{chat_id}')
+                user['phone_number'] = context.user_data['phone_number'][3:]
+
+                requests.put(API_URL + f'users/{chat_id}',
                              auth=API_AUTHENTICATION,
-                             json=payload)
+                             json=user)
 
                 update.effective_message.reply_text(
                     'Отлично, Ваш номер подтвержден!')
+                return Menu().display(update, context)
             else:
                 update.effective_message.reply_text(
                     "Код неправильный. Попробуйте ещё раз!")
