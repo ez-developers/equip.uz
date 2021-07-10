@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'telegram_bot',
     'rest_framework',
+    
 ]
 
 REST_FRAMEWORK = {
