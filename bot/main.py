@@ -32,6 +32,20 @@ def main():
             CommandHandler('start', registration.start)
         ],
         states={
+            "NAME": [
+                MessageHandler(Filters.text, registration.get_name)
+            ],
+            "REQUESTING_PHONE": [
+                MessageHandler(Filters.text | Filters.contact,
+                               registration.get_phone)
+            ],
+            "CODE_CHECK": [
+                MessageHandler(Filters.regex(
+                    j['buttons']['reenter_phone']), registration.request_phone),
+                MessageHandler(Filters.regex(
+                    j['buttons']['resend_code']), registration.send_code),
+                MessageHandler(Filters.text, registration.confirming_phone)
+            ],
             "MENU_DISPLAYED": [
                 MessageHandler(Filters.regex(
                     menu_buttons["order"]), menu.categories)
