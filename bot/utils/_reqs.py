@@ -39,3 +39,11 @@ def product_details(product_name: str) -> dict:
     for product in response:
         if product['name'] == product_name:
             return product
+
+
+def notification_on(chat_id) -> bool:
+    user = get(f'users/{chat_id}')
+    if user["notifications"]:
+        return True
+    else:
+        return False
