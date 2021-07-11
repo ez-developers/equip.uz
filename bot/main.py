@@ -20,6 +20,7 @@ menu = Menu()
 registration = Registration()
 j = json.load(open("bot/assets/text.json", "r"))
 menu_buttons = j['buttons']['menu']
+buttons = j['buttons']
 
 
 def main():
@@ -41,14 +42,16 @@ def main():
             ],
             "CODE_CHECK": [
                 MessageHandler(Filters.regex(
-                    j['buttons']['reenter_phone']), registration.request_phone),
+                    buttons['reenter_phone']), registration.request_phone),
                 MessageHandler(Filters.regex(
-                    j['buttons']['resend_code']), registration.send_code),
+                    buttons['resend_code']), registration.send_code),
                 MessageHandler(Filters.text, registration.confirming_phone)
             ],
             "MENU_DISPLAYED": [
                 MessageHandler(Filters.regex(
-                    menu_buttons["order"]), menu.categories)
+                    menu_buttons["order"]), menu.categories),
+                MessageHandler(Filters.regex(
+                    menu_buttons["settings"]), menu.settings)
             ],
             "CATEGORIES": [
                 MessageHandler(Filters.regex(
@@ -59,9 +62,18 @@ def main():
                 MessageHandler(Filters.regex(
                     menu_buttons["back"]), menu.categories),
                 MessageHandler(filterProducts, menu.product_details)
+            ],
+            "SETTINGS": [
+                MessageHandler(Filters.regex(
+                    menu_buttons["back"]), menu.display),
+                MessageHandler(Filters.regex(buttons["notification_on"]) |
+                               Filters.regex(buttons["notification_off"]),
+                               menu.change_notification_status)
             ]
         },
-        fallbacks=[]
+        fallbacks=[
+            CommandHandler('start', registration.start)
+        ]
     )
 
     dispatcher.add_handler(conversation)
