@@ -1,23 +1,30 @@
 from telegram import ReplyKeyboardMarkup, Update, KeyboardButton
 from telegram.ext import CallbackContext
 from bot.utils.build_menu import build_menu
-from bot.utils._reqs import parser, target_category_id, products_list, product_details
+from bot.utils._reqs import (parser,
+                             target_category_id,
+                             products_list,
+                             product_details,
+                             notification_on,
+                             get)
 from backend.settings import API_URL, API_AUTHENTICATION
 import logging
 import json
+import requests
 
 j = json.load(open("bot/assets/text.json", "r"))
 text = j["texts"]
-button = j["buttons"]["menu"]
+button = j["buttons"]
+menu_button = j["buttons"]["menu"]
 
 
 class Menu:
     def __init__(self):
         self.menu_buttons = [
-            [KeyboardButton(button["order"])],
-            [KeyboardButton(button["contact"]),
-             KeyboardButton(button["promo"])],
-            [KeyboardButton(button["settings"])]
+            [KeyboardButton(menu_button["order"])],
+            [KeyboardButton(menu_button["contact"]),
+             KeyboardButton(menu_button["promo"])],
+            [KeyboardButton(menu_button["settings"])]
         ]
 
     def display(self, update: Update, context: CallbackContext):
@@ -49,7 +56,7 @@ class Menu:
                                          n_cols=2,
                                          footer_buttons=[
                                              KeyboardButton(
-                                                 button["back"])]
+                                                 menu_button["back"])]
                                      ), resize_keyboard=True
                                  ),
                                  parse_mode='HTML')
@@ -72,7 +79,7 @@ class Menu:
                                          n_cols=1,
                                          footer_buttons=[
                                              KeyboardButton(
-                                                 button["back"])]
+                                                 menu_button["back"])]
 
                                      ), resize_keyboard=True
                                  ),
@@ -93,3 +100,43 @@ class Menu:
                                  
 <b>Цена:</b>
 {product["price"]}""", parse_mode='HTML')
+
+    def settings(self, update: Update, context: CallbackContext):
+        chat_id = update.effective_chat.id
+        state = "SETTINGS"
+        notif_status = notification_on(chat_id)
+        notifcation_button = button["notification_off"] if notif_status else button["notification_on"]
+
+        buttons = [
+            [button["change_phone"],
+             button["change_name"]],
+            [notifcation_button],
+            [menu_button['back']]
+        ]
+        context.bot.send_message(chat_id,
+                                 text["settings"],
+                                 reply_markup=ReplyKeyboardMarkup(
+                                     buttons, resize_keyboard=True),
+                                 parse_mode='HTML')
+        logging.info(
+            f"User {chat_id} opened settings. Returned state: {state}")
+        return state
+
+    def change_notification_status(self, update: Update, context: CallbackContext):
+        chat_id = update.effective_chat.id
+        user = get(f'users/{chat_id}')
+        if notification_on(chat_id):
+            user['notifications'] = False
+            update.effective_message.reply_text(
+                "Вы отписались от уведомлений!")
+        else:
+            user['notifications'] = True
+            update.effective_message.reply_text(
+                "Подписка на уведомления возобновлена!")
+        requests.put(API_URL + f'users/{chat_id}',
+                     auth=API_AUTHENTICATION,
+                     json=user,
+                     headers={'Content-Type': 'application/json'})
+        logging.info(
+            f"User {chat_id} has changed his notification preferences to {user['notifications']}")
+        return self.settings(update, context)
