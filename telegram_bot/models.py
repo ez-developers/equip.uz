@@ -13,6 +13,7 @@ class User(models.Model):
     phone_number = models.CharField(max_length=9, null=True, blank=False)
     username = models.CharField(max_length=20, null=True, blank=False)
     joined_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    notifications = models.BooleanField(default=True)
 
     def __str__(self):
         return str(self.user_id)
