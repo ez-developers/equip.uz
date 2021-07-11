@@ -25,7 +25,7 @@ class Menu:
         chat_id = update.effective_chat.id
 
         context.bot.send_message(chat_id,
-                                 f'<b>{text["main_page"]}</b>',
+                                 f'{text["main_page"]}',
                                  reply_markup=ReplyKeyboardMarkup(
                                      self.menu_buttons, resize_keyboard=True),
                                  parse_mode='HTML')
@@ -41,7 +41,7 @@ class Menu:
                          key='name')
 
         context.bot.send_message(chat_id,
-                                 f'<b>{text["category"]}</b>',
+                                 f'{text["category"]}',
                                  reply_markup=ReplyKeyboardMarkup(
                                      build_menu(
                                          buttons=[KeyboardButton(
@@ -64,7 +64,7 @@ class Menu:
         buttons = products_list(target_id)
 
         context.bot.send_message(chat_id,
-                                 f'<b>{text["product"]}</b>',
+                                 f'{text["product"]}',
                                  reply_markup=ReplyKeyboardMarkup(
                                      build_menu(
                                          buttons=[KeyboardButton(
