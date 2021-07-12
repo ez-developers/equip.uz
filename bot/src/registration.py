@@ -8,6 +8,7 @@ from telegram.ext import CallbackContext
 from telegram.keyboardbutton import KeyboardButton
 from backend.settings import API_URL, API_AUTHENTICATION
 from bot.src.menu import Menu
+from bot.src.conversation import Conversation
 from bot.utils._reqs import get
 from bot.utils.json_to_dict import json_to_dict
 from bot.utils.sms_api import send_sms, sms_text
@@ -183,7 +184,7 @@ class Registration:
 
                 update.effective_message.reply_text(
                     'Отлично, Ваш номер подтвержден!')
-                return Menu().display(update, context)
+                return Conversation().display(update, context, after_registration=True)
             else:
                 update.effective_message.reply_text(
                     "Код неправильный. Попробуйте ещё раз!")
