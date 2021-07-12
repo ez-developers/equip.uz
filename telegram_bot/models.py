@@ -44,6 +44,8 @@ class Product(models.Model):
         verbose_name="Цена", max_digits=6, decimal_places=2, null=True)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, verbose_name="Категория", null=True)
+    image = models.ImageField(
+        upload_to="uploads/products/%Y_%m_%d/", default="uploads/defaults/bot_404.png/")
 
     @admin.display
     def colored_price(self):
