@@ -8,6 +8,7 @@ from telegram.ext import (Updater,
 from dotenv import load_dotenv
 from bot.src.menu import Menu
 from bot.src.registration import Registration
+from bot.src.conversation import Conversation
 from bot.utils.filter import filterCategories, filterProducts
 import os
 import logging
@@ -18,6 +19,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 menu = Menu()
 registration = Registration()
+conversation = Conversation()
 j = json.load(open("bot/assets/text.json", "r"))
 menu_buttons = j['buttons']['menu']
 buttons = j['buttons']
@@ -51,6 +53,8 @@ def main():
                 MessageHandler(Filters.regex(
                     menu_buttons["order"]), menu.categories),
                 MessageHandler(Filters.regex(
+                    menu_buttons["contact"]), Conversation().display),
+                MessageHandler(Filters.regex(
                     menu_buttons["settings"]), menu.settings)
             ],
             "CATEGORIES": [
@@ -78,6 +82,16 @@ def main():
                 MessageHandler(Filters.regex(
                     menu_buttons["back"]), menu.settings),
                 MessageHandler(Filters.text, menu.get_name),
+            ],
+            "CONVERSATION": [
+                MessageHandler(Filters.regex(
+                    menu_buttons["back"]), menu.display),
+                MessageHandler(Filters.regex(buttons['skip']), menu.display),
+                MessageHandler(Filters.regex(buttons['type_text']) |
+                               Filters.regex(buttons['type_photo']) |
+                               Filters.regex(buttons['type_video']) |
+                               Filters.regex(buttons['type_audio']),
+                               Conversation().accept_request),
             ]
         },
         fallbacks=[
