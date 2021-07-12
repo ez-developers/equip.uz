@@ -40,12 +40,12 @@ class Product(models.Model):
     name = models.CharField(
         verbose_name="Название продукта", max_length=255, null=True)
     description = models.TextField(verbose_name="Описание", null=True)
-    price = models.DecimalField(
-        verbose_name="Цена", max_digits=6, decimal_places=2, null=True)
+    price = models.PositiveBigIntegerField(
+        verbose_name="Цена", null=True)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, verbose_name="Категория", null=True)
     image = models.ImageField(
-        upload_to="uploads/products/%Y_%m_%d/", default="uploads/defaults/bot_404.png/")
+        upload_to="uploads/products/%Y_%m_%d/", default="uploads/defaults/bot_404.png/", verbose_name="Фотография")
 
     @admin.display
     def colored_price(self):
