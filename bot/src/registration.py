@@ -105,8 +105,6 @@ class Registration:
     def request_phone(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
         state = "REQUESTING_PHONE"
-        logging.info(
-            f"{chat_id} is being requested his phone number. Returning state: {state}")
         context.bot.send_message(chat_id=chat_id,
                                  text=txt['texts']['request_phone'],
                                  reply_markup=ReplyKeyboardMarkup([
@@ -114,6 +112,8 @@ class Registration:
                                          txt['buttons']['send_phone'], request_contact=True)],
                                  ], resize_keyboard=True),
                                  parse_mode='HTML')
+        logging.info(
+            f"{chat_id} is being requested his phone number. Returning state: {state}")
         return state
 
     def send_code(self, update: Update, context: CallbackContext):
