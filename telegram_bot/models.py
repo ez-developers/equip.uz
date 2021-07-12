@@ -8,12 +8,17 @@ class User(models.Model):
         verbose_name_plural = "Пользователи"
         verbose_name = "Пользователь"
 
-    user_id = models.BigIntegerField(primary_key=True)
-    name = models.CharField(max_length=30, null=False, blank=False)
-    phone_number = models.CharField(max_length=9, null=True, blank=False)
-    username = models.CharField(max_length=20, null=True, blank=False)
+    user_id = models.BigIntegerField(
+        primary_key=True, verbose_name="ID пользователя")
+    name = models.CharField(max_length=30, null=False,
+                            blank=False, verbose_name="Имя пользователя")
+    phone_number = models.CharField(
+        max_length=9, null=True, blank=False, verbose_name="Телефон")
+    username = models.CharField(
+        max_length=20, null=True, blank=False, verbose_name="Юзернейм в телеграме")
     joined_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    notifications = models.BooleanField(default=True)
+    notifications = models.BooleanField(
+        default=True, verbose_name="Подписка на уведомления")
 
     def __str__(self):
         return str(self.user_id)

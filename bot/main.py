@@ -68,7 +68,16 @@ def main():
                     menu_buttons["back"]), menu.display),
                 MessageHandler(Filters.regex(buttons["notification_on"]) |
                                Filters.regex(buttons["notification_off"]),
-                               menu.change_notification_status)
+                               menu.change_notification_status),
+                MessageHandler(Filters.regex(
+                    buttons["change_phone"]), registration.request_phone),
+                MessageHandler(Filters.regex(
+                    buttons["change_name"]), menu.change_name),
+            ],
+            "EDITING_NAME": [
+                MessageHandler(Filters.regex(
+                    menu_buttons["back"]), menu.settings),
+                MessageHandler(Filters.text, menu.get_name),
             ]
         },
         fallbacks=[

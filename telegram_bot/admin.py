@@ -12,7 +12,8 @@ admin.site.site_header = "Администрация «Equip Uz»"
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ("user_id", "name", "username", "phone_number")
+    list_display = ("user_id", "name", "username",
+                    "phone_number", "notifications")
     list_display_links = ("user_id",)
     change_form_template = 'admin/change_form.html'
 

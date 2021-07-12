@@ -140,3 +140,29 @@ class Menu:
         logging.info(
             f"User {chat_id} has changed his notification preferences to {user['notifications']}")
         return self.settings(update, context)
+
+    def change_name(self, update: Update, context: CallbackContext):
+        chat_id = update.effective_chat.id
+        state = "EDITING_NAME"
+        context.bot.send_message(chat_id,
+                                 text["enter_name"],
+                                 reply_markup=ReplyKeyboardMarkup([
+                                     [menu_button["back"]]
+                                 ], resize_keyboard=True),
+                                 parse_mode='HTML')
+        logging.info(
+            f"User {chat_id} is changing name. Returned state: {state}")
+        return state
+
+    def get_name(self, update: Update, context: CallbackContext):
+        chat_id = update.effective_chat.id
+        name = update.effective_message.text
+
+        user = get(f'users/{chat_id}')
+        user['name'] = name
+        requests.put(API_URL + f"users/{chat_id}",
+                     auth=API_AUTHENTICATION,
+                     json=user)
+        update.effective_message.reply_text(
+            "<b>Готово! ✅</b>", parse_mode='HTML')
+        return self.settings(update, context)
