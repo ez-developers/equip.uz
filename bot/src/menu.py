@@ -1,4 +1,4 @@
-from telegram import ReplyKeyboardMarkup, Update, KeyboardButton
+from telegram import ReplyKeyboardMarkup, Update, KeyboardButton, ChatAction
 from telegram.ext import CallbackContext
 from bot.utils.build_menu import build_menu
 from bot.utils._reqs import (parser,
@@ -7,8 +7,10 @@ from bot.utils._reqs import (parser,
                              product_details,
                              notification_on,
                              get)
-from backend.settings import API_URL, API_AUTHENTICATION
+from bot.utils.get_photo_id import get_photo_id
+from backend.settings import API_URL, API_AUTHENTICATION, BASE_DIR
 import logging
+import time
 import json
 import requests
 
@@ -92,14 +94,41 @@ class Menu:
         chat_id = update.effective_chat.id
         requested_product = update.message.text
         product = product_details(requested_product)
-        context.bot.send_message(chat_id,
-                                 f"""<b>{product['name']}</b>
+
+        try:
+            file_id = context.bot_data['product_' + str(product['id'])]
+            context.bot.send_photo(chat_id,
+                                   photo=file_id,
+                                   caption=f"""<b>{product['name']}</b>
                                  
 <b>Описание:</b>
 {product['description']}
                                  
 <b>Цена:</b>
 {product["price"]}""", parse_mode='HTML')
+            return
+        except KeyError:
+            pass
+        if product['image'][-1] == '/':
+            product['image'] = product['image'][:-1]
+        context.bot.send_chat_action(chat_id,
+                                     action=ChatAction.UPLOAD_PHOTO)
+        time.sleep(0.5)
+        msg = context.bot.send_photo(chat_id,
+                                     photo=open(str(BASE_DIR) +
+                                                product['image'], 'rb'),
+                                     caption=f"""<b>{product['name']}</b>
+                                 
+<b>Описание:</b>
+{product['description']}
+                                 
+<b>Цена:</b>
+{product["price"]}""", parse_mode='HTML')
+        payload = {
+            'product_' + str(product['id']): get_photo_id(msg.photo)
+        }
+        print(payload)
+        context.bot_data.update(payload)
 
     def settings(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
