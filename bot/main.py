@@ -30,7 +30,7 @@ def main():
     updater = Updater(token=os.getenv('API_TOKEN'))
     dispatcher = updater.dispatcher
 
-    conversation = ConversationHandler(
+    main_conversation = ConversationHandler(
         entry_points=[
             CommandHandler('start', registration.start)
         ],
@@ -53,7 +53,7 @@ def main():
                 MessageHandler(Filters.regex(
                     menu_buttons["order"]), menu.categories),
                 MessageHandler(Filters.regex(
-                    menu_buttons["contact"]), Conversation().display),
+                    menu_buttons["contact"]), conversation.display),
                 MessageHandler(Filters.regex(
                     menu_buttons["settings"]), menu.settings)
             ],
@@ -91,7 +91,7 @@ def main():
                                Filters.regex(buttons['type_photo']) |
                                Filters.regex(buttons['type_video']) |
                                Filters.regex(buttons['type_audio']),
-                               Conversation().accept_request),
+                               conversation.route_request),
             ]
         },
         fallbacks=[
@@ -99,7 +99,7 @@ def main():
         ]
     )
 
-    dispatcher.add_handler(conversation)
+    dispatcher.add_handler(main_conversation)
 
     updater.start_polling()
     updater.idle()
