@@ -7,7 +7,8 @@
     "category": "<b>Выберите категорию</b>",
     "product": "<b>Выберите продукт</b>",
     "settings": "<b>Настройки</b>",
-    "enter_name": "<b>Введите ваше Имя:</b>"
+    "enter_name": "<b>Введите ваше Имя:</b>",
+    "choose_type_conversation": "<b>Выберите тип обращения</b>"
   },
   "buttons": {
     "menu": {
@@ -23,6 +24,11 @@
     "change_phone": "Сменить номер",
     "change_name": "Сменить имя",
     "notification_off": "Отписаться от уведомлений",
-    "notification_on": "Подписаться на уведомления"
+    "notification_on": "Подписаться на уведомления",
+    "type_text": "Текстовое сообщение",
+    "type_photo": "Фото",
+    "type_video": "Видео",
+    "type_audio": "Аудио-голос",
+    "skip": "Пропустить ⏩"
   }
 }
