@@ -48,7 +48,7 @@ class userDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 @permission_classes([IsAuthenticated])
-class cateogriesList(APIView):
+class categoriesList(APIView):
 
     def get(self, request, *args, **kwargs):
         queryset = Category.objects.all()
