@@ -28,15 +28,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+
+DEVELOPMENT_MODE = os.getenv("DEVELOPMENT_MODE", "False") == "True"
 
 ALLOWED_HOSTS = [
     '192.168.1.107', '127.0.0.1', 'localhost', '192.168.1.105',
-    '68.183.215.138'
+    '68.183.215.138', 'equip.ezpz.uz'
 ]
 
 SMS_API_URL = "http://91.204.239.44/broker-api/send"
-API_URL = 'http://192.168.1.105:8000/api/'
+API_URL = 'http://equip.ezpz.uz/api/'
 API_AUTHENTICATION = HTTPBasicAuth(os.getenv('REST_API_USERNAME'),
                                    os.getenv('REST_API_PASSWORD'))
 
@@ -94,20 +96,21 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
+
     'default': {
 
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+	'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': "equipuz_dev",
+	'NAME': 'equipuz_prod',
 
-        'USER': os.getenv('DATABASE_USERNAME'),
+	'USER': os.getenv('DATABASE_USERNAME'),
 
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+	'PASSWORD': os.getenv('DATABASE_PASSWORD'),
 
-        'HOST': '192.168.1.111',
+	'HOST': '46.101.223.149',
 
-        'PORT': '5432',
-    }
+	'PORT': '5432',
+    },
 }
 
 
