@@ -9,6 +9,7 @@ from dotenv import load_dotenv
 from bot.src.menu import Menu
 from bot.src.registration import Registration
 from bot.src.conversation import Conversation
+from bot.src.promo import Promo
 from bot.utils.filter import filterCategories, filterProducts
 import os
 import logging
@@ -20,6 +21,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 menu = Menu()
 registration = Registration()
 conversation = Conversation()
+promo = Promo()
 j = json.load(open("bot/assets/text.json", "r"))
 menu_buttons = j['buttons']['menu']
 buttons = j['buttons']
@@ -55,7 +57,9 @@ def main():
                 MessageHandler(Filters.regex(
                     menu_buttons["contact"]), conversation.display),
                 MessageHandler(Filters.regex(
-                    menu_buttons["settings"]), menu.settings)
+                    menu_buttons["settings"]), menu.settings),
+                MessageHandler(Filters.regex(
+                    menu_buttons["promo"]), promo.display)
             ],
             "CATEGORIES": [
                 MessageHandler(Filters.regex(
@@ -66,6 +70,10 @@ def main():
                 MessageHandler(Filters.regex(
                     menu_buttons["back"]), menu.categories),
                 MessageHandler(filterProducts, menu.product_details)
+            ],
+            "PROMO_DISPLAYED": [
+                CallbackQueryHandler(promo.back_to_menu, pattern="exit"),
+                CallbackQueryHandler(promo.back_to_menu, pattern="next")
             ],
             "SETTINGS": [
                 MessageHandler(Filters.regex(
@@ -92,6 +100,28 @@ def main():
                                Filters.regex(buttons['type_video']) |
                                Filters.regex(buttons['type_audio']),
                                conversation.route_request),
+            ],
+            "TEXT_TYPE": [
+                MessageHandler(Filters.regex(
+                    menu_buttons["back"]), conversation.display),
+                MessageHandler(Filters.text, conversation.accept_request)
+            ],
+            "PHOTO_TYPE": [
+                MessageHandler(Filters.regex(
+                    menu_buttons["back"]), conversation.display),
+                MessageHandler(Filters.photo, conversation.accept_request)
+            ],
+            "VIDEO_TYPE": [
+                MessageHandler(Filters.regex(
+                    menu_buttons["back"]), conversation.display),
+                MessageHandler(Filters.video, conversation.accept_request)
+            ],
+            "AUDIO_TYPE": [
+                MessageHandler(Filters.regex(
+                    menu_buttons["back"]), conversation.display),
+                MessageHandler(Filters.audio |
+                               Filters.voice,
+                               conversation.accept_request)
             ]
         },
         fallbacks=[
