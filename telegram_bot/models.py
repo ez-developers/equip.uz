@@ -67,3 +67,42 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Promo(models.Model):
+
+    name = models.CharField(max_length=255, null=True,
+                            blank=False, verbose_name="Название промо-акции")
+    text = models.TextField(verbose_name="Текст", blank=False, null=True)
+    image = models.ImageField(
+        upload_to="uploads/promo/%Y_%m_%d", verbose_name="Фото", blank=True)
+
+    date_published = models.DateTimeField(
+        auto_now_add=True, null=True, verbose_name="Дата публикации")
+
+    class Meta:
+        verbose_name = "Промоакция"
+        verbose_name_plural = "Промокации"
+
+    def __str__(self):
+        return self.name
+
+
+class Order(models.Model):
+    pass
+
+
+class Broadcast(models.Model):
+    heading = models.CharField(
+        max_length=255, null=True, verbose_name="Заголовок")
+    text = models.TextField(verbose_name="Текст")
+    image = models.ImageField(
+        upload_to="uploads/broadcast/%Y_%m_%d", verbose_name="Фото (по желанию)", blank=True)
+
+    date_published = models.DateField(auto_now=True, null=True)
+
+    change_form_template = 'telegram_bot/admin//submit_line.html'
+
+    class Meta:
+        verbose_name = "Рассылка"
+        verbose_name_plural = "Рассылки"
