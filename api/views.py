@@ -1,13 +1,11 @@
-from telegram_bot.models import User, Category, Product
+from telegram_bot.models import User, Category, Product, Promo
 from rest_framework import status
-from rest_framework.serializers import Serializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
-from .serializers import UserSerializer, CategorySerializer, ProductSerializer
+from .serializers import UserSerializer, CategorySerializer, ProductSerializer, PromoSerializer
 from django.http import Http404, HttpResponse
-from django.core import serializers
 from rest_framework.views import APIView
 from rest_framework import generics
 
@@ -55,5 +53,15 @@ class cateogriesList(APIView):
     def get(self, request, *args, **kwargs):
         queryset = Category.objects.all()
         serializer = CategorySerializer(queryset, many=True)
+
+        return HttpResponse(JSONRenderer().render(serializer.data), content_type='application/json')
+
+
+@permission_classes([IsAuthenticated])
+class promoList(APIView):
+
+    def get(self, request, *args, **kwargs):
+        queryset = Promo.objects.all()
+        serializer = PromoSerializer(queryset, many=True)
 
         return HttpResponse(JSONRenderer().render(serializer.data), content_type='application/json')
