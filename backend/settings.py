@@ -41,6 +41,7 @@ API_URL = 'https://equip.ezpz.uz/api/'
 API_AUTHENTICATION = HTTPBasicAuth(os.getenv('REST_API_USERNAME'),
                                    os.getenv('REST_API_PASSWORD'))
 GROUP_ID = -1001541510798
+BOT_ID = 1771123936  # ( @equipuz_bot )
 
 # Application definition
 
