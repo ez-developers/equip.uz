@@ -55,7 +55,7 @@ class Registration:
                                          parse_mode='HTML')
                 return self.request_name(update, context)
         else:
-            pass  # The bot is working in the group.
+            return  # The bot is working in the group.
 
     def check_data(self, update, context, chat_id):
         user = get(f'users/{chat_id}')
