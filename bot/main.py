@@ -6,11 +6,14 @@ from telegram.ext import (Updater,
                           CallbackQueryHandler,
                           CallbackContext,)
 from dotenv import load_dotenv
+from ptbcontrib.reply_to_message_filter import ReplyToMessageFilter
+from backend.settings import BOT_ID
 from bot.src.menu import Menu
 from bot.src.registration import Registration
 from bot.src.conversation import Conversation
 from bot.src.promo import Promo
-from bot.utils.filter import filterCategories, filterProducts
+from bot.src.group import Group
+from bot.utils.filter import FilterButton
 import os
 import logging
 import json
@@ -22,6 +25,7 @@ menu = Menu()
 registration = Registration()
 conversation = Conversation()
 promo = Promo()
+group = Group()
 j = json.load(open("bot/assets/text.json", "r"))
 menu_buttons = j['buttons']['menu']
 buttons = j['buttons']
@@ -64,15 +68,17 @@ def main():
             "CATEGORIES": [
                 MessageHandler(Filters.regex(
                     menu_buttons["back"]), menu.display),
-                MessageHandler(filterCategories, menu.products)
+                MessageHandler(FilterButton("categories"), menu.products)
             ],
             "PRODUCTS": [
                 MessageHandler(Filters.regex(
                     menu_buttons["back"]), menu.categories),
-                MessageHandler(filterProducts, menu.product_details)
+                MessageHandler(FilterButton("products"), menu.product_details)
             ],
             "PROMO_DISPLAYED": [
                 CallbackQueryHandler(promo.back_to_menu, pattern="exit"),
+                CallbackQueryHandler(promo.back_to_menu, pattern="like"),
+                CallbackQueryHandler(promo.back_to_menu, pattern="prev"),
                 CallbackQueryHandler(promo.back_to_menu, pattern="next")
             ],
             "SETTINGS": [
@@ -130,6 +136,8 @@ def main():
     )
 
     dispatcher.add_handler(main_conversation)
+    dispatcher.add_handler(MessageHandler(
+        ReplyToMessageFilter(Filters.user(BOT_ID)), group.reply_to_user))
 
     updater.start_polling()
     updater.idle()
