@@ -97,18 +97,19 @@ class Menu:
         a = str(product['price'])
         formatted_price = ' '.join([a[::-1][i:i+3]
                                     for i in range(0, len(a), 3)])[::-1]
-
-        try:
-            file_id = context.bot_data['product_' + str(product['id'])]
-            context.bot.send_photo(chat_id,
-                                   photo=file_id,
-                                   caption=f"""<b>{product['name']}</b>
+        caption = f"""<b>{product['name']}</b>
                                  
 <b>Описание:</b>
 {product['description']}
                                  
 <b>Цена:</b>
-{formatted_price} сум""", parse_mode='HTML')
+{formatted_price} сум"""
+
+        try:
+            file_id = context.bot_data['product_' + str(product['id'])]
+            context.bot.send_photo(chat_id,
+                                   photo=file_id,
+                                   caption=caption, parse_mode='HTML')
             return
         except KeyError:
             pass
@@ -116,17 +117,10 @@ class Menu:
             product['image'] = product['image'][:-1]
         context.bot.send_chat_action(chat_id,
                                      action=ChatAction.UPLOAD_PHOTO)
-        # time.sleep(0.5)
         msg = context.bot.send_photo(chat_id,
                                      photo=open(str(BASE_DIR) +
                                                 product['image'], 'rb'),
-                                     caption=f"""<b>{product['name']}</b>
-                                 
-<b>Описание:</b>
-{product['description']}
-                                 
-<b>Цена:</b>
-{formatted_price} сум""", parse_mode='HTML')
+                                     caption=caption, parse_mode='HTML')
         payload = {
             'product_' + str(product['id']): get_photo_id(msg.photo)
         }
