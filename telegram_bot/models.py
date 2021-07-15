@@ -101,7 +101,7 @@ class Broadcast(models.Model):
 
     date_published = models.DateField(auto_now=True, null=True)
 
-    change_form_template = 'telegram_bot/admin//submit_line.html'
+    change_form_template = 'telegram_bot/admin/submit_line.html'
 
     class Meta:
         verbose_name = "Рассылка"

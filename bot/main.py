@@ -18,8 +18,9 @@ import os
 import logging
 import json
 
+load_dotenv()
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.DEBUG)
+                    level=logging.DEBUG if os.getenv('DEBUG') else logging.INFO)
 
 menu = Menu()
 registration = Registration()
@@ -32,7 +33,6 @@ buttons = j['buttons']
 
 
 def main():
-    load_dotenv()
     updater = Updater(token=os.getenv('API_TOKEN'))
     dispatcher = updater.dispatcher
 
