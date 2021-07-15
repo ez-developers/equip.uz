@@ -102,13 +102,21 @@ DATABASES = {
 
 	'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
+<<<<<<< HEAD
 	'NAME': 'equipuz_prod',
+=======
+        'NAME': "equipuz_prod",
+>>>>>>> 191660c4e04415650957bae4e19e16cd2652a129
 
 	'USER': os.getenv('DATABASE_USERNAME'),
 
 	'PASSWORD': os.getenv('DATABASE_PASSWORD'),
 
+<<<<<<< HEAD
 	'HOST': '46.101.223.149',
+=======
+        'HOST': '46.101.223.149',
+>>>>>>> 191660c4e04415650957bae4e19e16cd2652a129
 
 	'PORT': '5432',
     },

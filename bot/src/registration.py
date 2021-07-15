@@ -36,7 +36,6 @@ class Registration:
         if self.is_private_chat(chat_id):
             all_users = []
             user_objects = get('users')
-            print(user_objects)
             for i in user_objects:
                 all_users.append(i["user_id"])
             if chat_id in all_users:

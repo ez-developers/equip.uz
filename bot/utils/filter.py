@@ -1,6 +1,6 @@
 from telegram.ext import MessageFilter
 from bot.utils._reqs import parser
-from backend.settings import API_URL
+from backend.settings import API_URL, API_AUTHENTICATION
 from requests.auth import HTTPBasicAuth
 import json
 
@@ -13,7 +13,7 @@ class FilterButton(MessageFilter):
 
     def filter(self, message):
         return message.text in parser(API_URL=f"{API_URL + self.section_key}/",
-                                      API_auth=HTTPBasicAuth("admin", "admin"),
+                                      API_auth=API_AUTHENTICATION,
                                       key="name")
 
 
