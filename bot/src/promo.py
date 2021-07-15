@@ -19,6 +19,10 @@ class Promo:
         state = "PROMO_DISPLAYED"
         promos = requests.get(
             API_URL + "promo", auth=API_AUTHENTICATION).json()
+        if len(promos) == 0:
+            update.effective_message.reply_text(
+                "<b>Действующих акций пока нет 😔</b>", parse_mode='HTML')
+            return
         promo_text = f"<b>{promos[0]['name']}</b>\n\n{promos[0]['text']}"
         promo_ids = []
         for i in promos:
@@ -29,11 +33,6 @@ class Promo:
             }
         )
         print(promo_ids)
-
-        if len(promos) == 0:
-            update.effective_message.reply_text(
-                "<b>Действующих акций пока нет 😔</b>", parse_mode='HTML')
-            return
 
         update.effective_message.reply_text(text["promo_displayed"],
                                             reply_markup=ReplyKeyboardRemove(),
