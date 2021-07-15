@@ -2,6 +2,7 @@ from telegram.ext import CallbackContext
 from telegram import Update, ReplyKeyboardMarkup
 from backend.settings import GROUP_ID
 from bot.utils._reqs import get
+from bot.src.menu import Menu
 import json
 import logging
 
@@ -82,6 +83,18 @@ class Conversation:
         chat_id = update.effective_chat.id
         user_request = update.effective_message
         user = get(f"users/{chat_id}")
-        context.bot.forward_message(GROUP_ID,
-                                    from_chat_id=chat_id,
-                                    message_id=user_request.message_id)
+        user_name = user['name']
+        user_phone = user['phone_number']
+        msg = context.bot.forward_message(GROUP_ID,
+                                          from_chat_id=chat_id,
+                                          message_id=user_request.message_id)
+        context.bot.send_message(GROUP_ID,
+                                 f"""Пользователь: <b>{user_name}</b>\nТелефон: <b>{user_phone}</b>""",
+                                 parse_mode='HTML')
+        payload = {
+            msg.message_id: chat_id
+        }
+        context.bot_data.update(payload)
+        update.effective_message.reply_text(
+            "Принято! Бот направил ваше обращение менеджерам компании, вам скоро ответят 😇")
+        return Menu().display(update, context)
