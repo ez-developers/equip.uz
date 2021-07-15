@@ -124,12 +124,7 @@ class Registration:
             'sms_code': code
         }
         context.user_data.update(payload)
-        req = requests.get(API_URL + f'users/{chat_id}',
-                           auth=API_AUTHENTICATION).json()['phone_number']
-        if req is not None:
-            phone = req
-        else:
-            phone = context.user_data['phone_number']
+        phone = context.user_data['phone_number']
 
         send_sms(phone, sms_text(code))
         update.effective_message.reply_text(
