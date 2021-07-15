@@ -15,7 +15,3 @@ class FilterButton(MessageFilter):
         return message.text in parser(API_URL=f"{API_URL + self.section_key}/",
                                       API_auth=API_AUTHENTICATION,
                                       key="name")
-
-
-filterCategories = FilterButton("categories")
-filterProducts = FilterButton("products")
