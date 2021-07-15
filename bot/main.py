@@ -20,7 +20,8 @@ import json
 
 load_dotenv()
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.DEBUG if os.getenv('DEBUG') else logging.INFO)
+                    level=logging.DEBUG if os.getenv('DEBUG') == "True"
+                    else logging.INFO)
 
 menu = Menu()
 registration = Registration()
