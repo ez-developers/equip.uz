@@ -75,7 +75,7 @@ class Promo(models.Model):
                             blank=False, verbose_name="Название промо-акции")
     text = models.TextField(verbose_name="Текст", blank=False, null=True)
     image = models.ImageField(
-        "Фото", upload_to="uploads/promo/%Y_%m_%d", null=True, blank=True)
+        "Фото", upload_to="uploads/promo/%Y_%m_%d")
 
     date_published = models.DateTimeField(
         auto_now_add=True, null=True, verbose_name="Дата публикации")
