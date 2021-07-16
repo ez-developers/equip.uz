@@ -51,33 +51,45 @@ class Conversation:
         chat_id = update.effective_chat.id
         user_input = update.effective_message.text
         if user_input == button["type_text"]:
+            state = "TEXT_TYPE"
             update.effective_message.reply_text(text["text_type"],
                                                 reply_markup=ReplyKeyboardMarkup([
                                                     [button["menu"]["back"]]
                                                 ], resize_keyboard=True),
                                                 parse_mode='HTML')
-            return "TEXT_TYPE"
+            logging.info(
+                f"User {chat_id} is in the reqest sending page type of text. Returned state: {state}")
+            return state
         elif user_input == button["type_photo"]:
+            state = "PHOTO_TYPE"
             update.effective_message.reply_text(text["photo_type"],
                                                 reply_markup=ReplyKeyboardMarkup([
                                                     [button["menu"]["back"]]
                                                 ], resize_keyboard=True),
                                                 parse_mode='HTML')
-            return "PHOTO_TYPE"
+            logging.info(
+                f"User {chat_id} is in the reqest sending page type of photo. Returned state: {state}")
+            return state
         elif user_input == button["type_video"]:
+            state = "VIDEO_TYPE"
             update.effective_message.reply_text(text["video_type"],
                                                 reply_markup=ReplyKeyboardMarkup([
                                                     [button["menu"]["back"]]
                                                 ], resize_keyboard=True),
                                                 parse_mode='HTML')
-            return "VIDEO_TYPE"
+            logging.info(
+                f"User {chat_id} is in the reqest sending page type of video. Returned state: {state}")
+            return state
         elif user_input == button["type_audio"]:
+            state = "AUDIO_TYPE"
             update.effective_message.reply_text(text["audio_type"],
                                                 reply_markup=ReplyKeyboardMarkup([
                                                     [button["menu"]["back"]]
                                                 ], resize_keyboard=True),
                                                 parse_mode='HTML')
-            return "AUDIO_TYPE"
+            logging.info(
+                f"User {chat_id} is in the reqest sending page type of audio. Returned state: {state}")
+            return state
 
     def accept_request(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
