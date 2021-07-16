@@ -32,7 +32,6 @@ class Promo:
                 "current_promo_id": promos[0]['id']
             }
         )
-        print(promo_ids)
 
         update.effective_message.reply_text(text["promo_displayed"],
                                             reply_markup=ReplyKeyboardRemove(),

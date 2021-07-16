@@ -124,7 +124,6 @@ class Menu:
         payload = {
             'product_' + str(product['id']): get_photo_id(msg.photo)
         }
-        print(payload)
         context.bot_data.update(payload)
 
     def settings(self, update: Update, context: CallbackContext):
