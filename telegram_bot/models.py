@@ -47,20 +47,6 @@ class Product(models.Model):
     image = models.ImageField(
         upload_to="uploads/products/%Y_%m_%d/", default="uploads/defaults/bot_404.png/", verbose_name="Фотография")
 
-    @admin.display
-    def colored_price(self):
-        return format_html(
-            '<span style="font-weight:bold; color:#FFA500;">{}</span>',
-            self.price,
-        )
-
-    @admin.display
-    def colored_category(self):
-        return format_html(
-            '<b>{}</b>',
-            self.category,
-        )
-
     class Meta:
         verbose_name_plural = "Продукты"
         verbose_name = "Продукт"
