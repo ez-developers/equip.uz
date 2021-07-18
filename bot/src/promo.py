@@ -19,7 +19,17 @@ class Promo:
         chat_id = update.effective_chat.id
         state = "PROMO_DISPLAYED"
         promo_ids = []
-
+        buttons = [
+            [InlineKeyboardButton(
+                button["like_it"],
+                callback_data='like')],
+            [InlineKeyboardButton(
+                button["next"],
+                callback_data='next')],
+            [InlineKeyboardButton(
+                button["back_to_main"],
+                callback_data="exit")]
+        ]
         promos = requests.get(
             API_URL + "promo", auth=API_AUTHENTICATION).json()
 
@@ -38,6 +48,8 @@ class Promo:
             }
         )
         i = context.user_data['current_index']
+        if len(promo_ids) == 1:
+            buttons.pop(1)
         promo_text = f"<b>{promos[i]['name']}</b>\n\n{promos[i]['text']}"
 
         update.effective_message.reply_text(text["promo_displayed"],
@@ -50,19 +62,7 @@ class Promo:
                                photo=open(
                                    promos[i]['image'][1:], 'rb'),
                                caption=promo_text,
-                               reply_markup=InlineKeyboardMarkup(
-                                   [
-                                       [InlineKeyboardButton(
-                                           button["like_it"],
-                                           callback_data='like')],
-                                       [InlineKeyboardButton(
-                                           button["next"],
-                                           callback_data='next')],
-                                       [InlineKeyboardButton(
-                                           button["back_to_main"],
-                                           callback_data="exit")]
-                                   ]
-                               ),
+                               reply_markup=InlineKeyboardMarkup(buttons),
                                parse_mode='HTML')
 
         logging.info(
@@ -96,8 +96,6 @@ class Promo:
             toggler.pop()
         elif next_display_id == context.user_data['first_promo']:
             toggler.pop(0)
-        if len(context.user_data['promo_ids']) == 1:
-            toggler = []
         promo = get(f"promo/{next_display_id}")
         promo_text = f"<b>{promo['name']}</b>\n\n{promo['text']}"
 
