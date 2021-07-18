@@ -97,7 +97,7 @@ class Promo:
         elif next_display_id == context.user_data['first_promo']:
             toggler.pop(0)
         if len(context.user_data['promo_ids']) == 1:
-            togger = []
+            toggler = []
         promo = get(f"promo/{next_display_id}")
         promo_text = f"<b>{promo['name']}</b>\n\n{promo['text']}"
 
