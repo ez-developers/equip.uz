@@ -79,8 +79,8 @@ def main():
             "PROMO_DISPLAYED": [
                 CallbackQueryHandler(promo.back_to_menu, pattern="exit"),
                 CallbackQueryHandler(promo.back_to_menu, pattern="like"),
-                CallbackQueryHandler(promo.back_to_menu, pattern="prev"),
-                CallbackQueryHandler(promo.back_to_menu, pattern="next")
+                CallbackQueryHandler(promo.scrolling, pattern="prev"),
+                CallbackQueryHandler(promo.scrolling, pattern="next")
             ],
             "SETTINGS": [
                 MessageHandler(Filters.regex(
