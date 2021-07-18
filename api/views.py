@@ -42,7 +42,7 @@ class userAdd(APIView):
 
 
 @permission_classes([IsAuthenticated])
-class userDetail(generics.RetrieveUpdateDestroyAPIView):
+class userDetail(generics.RetrieveUpdateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -65,3 +65,11 @@ class promoList(APIView):
         serializer = PromoSerializer(queryset, many=True)
 
         return HttpResponse(JSONRenderer().render(serializer.data), content_type='application/json')
+
+
+@permission_classes([IsAuthenticated])
+@api_view(['GET'])
+def promoDetail(request, pk):
+    m = Promo.objects.get(pk=pk)
+    serializer = PromoSerializer(m)
+    return Response(serializer.data, status=status.HTTP_200_OK)
