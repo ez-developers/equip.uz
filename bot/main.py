@@ -13,6 +13,7 @@ from bot.src.registration import Registration
 from bot.src.conversation import Conversation
 from bot.src.promo import Promo
 from bot.src.group import Group
+from bot.src.broadcast import Broadcast
 from bot.src.error import error_handler
 from bot.utils.filter import FilterButton
 import os
@@ -29,6 +30,7 @@ registration = Registration()
 conversation = Conversation()
 promo = Promo()
 group = Group()
+broadcast = Broadcast()
 j = json.load(open("bot/assets/text.json", "r"))
 menu_buttons = j['buttons']['menu']
 buttons = j['buttons']
@@ -65,7 +67,8 @@ def main():
                 MessageHandler(Filters.regex(
                     menu_buttons["settings"]), menu.settings),
                 MessageHandler(Filters.regex(
-                    menu_buttons["promo"]), promo.display)
+                    menu_buttons["promo"]), promo.display),
+                CommandHandler('broadcast', broadcast.display)
             ],
             "CATEGORIES": [
                 MessageHandler(Filters.regex(
@@ -130,6 +133,10 @@ def main():
                 MessageHandler(Filters.audio |
                                Filters.voice,
                                conversation.accept_request)
+            ],
+            "BROADCAST": [
+                MessageHandler(Filters.regex(buttons['cancel']), menu.display),
+                MessageHandler(Filters.all, broadcast.all)
             ]
         },
         fallbacks=[
