@@ -4,7 +4,7 @@ from telegram.ext import (Updater,
                           MessageHandler,
                           Filters,
                           CallbackQueryHandler,
-                          CallbackContext,)
+                          PicklePersistence)
 from dotenv import load_dotenv
 from ptbcontrib.reply_to_message_filter import ReplyToMessageFilter
 from backend.settings import BOT_ID
@@ -37,7 +37,8 @@ buttons = j['buttons']
 
 
 def main():
-    updater = Updater(token=os.getenv('API_TOKEN'))
+    p = PicklePersistence(filename="RESTRICTED")
+    updater = Updater(token=os.getenv('API_TOKEN'), persistence=p)
     dispatcher = updater.dispatcher
 
     main_conversation = ConversationHandler(
@@ -141,7 +142,9 @@ def main():
         },
         fallbacks=[
             CommandHandler('start', registration.start)
-        ]
+        ],
+        persistent=True,
+        name="main_conversation"
     )
 
     dispatcher.add_handler(main_conversation)
