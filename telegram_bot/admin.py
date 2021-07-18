@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Promo, User, Category, Product, Broadcast
+from .models import Promo, User, Category, Product
 from django.utils.html import format_html
 from django.contrib.admin import AdminSite
 
@@ -44,9 +44,3 @@ class ProductAdmin(admin.ModelAdmin):
 class PromoAdmin(admin.ModelAdmin):
 
     list_display = ('name', 'date_published')
-
-
-@admin.register(Broadcast)
-class BroadcastAdmin(admin.ModelAdmin):
-
-    list_display = ('heading', 'date_published')
