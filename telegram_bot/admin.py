@@ -23,8 +23,8 @@ class UserAdmin(admin.ModelAdmin):
     def has_add_permission(self, request):
         return False
 
-    # def has_delete_permission(self, request, obj=None):
-    #     return False
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(Category)
@@ -35,7 +35,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
 
-    list_display = ('name', 'colored_price', 'colored_category')
+    list_display = ('name', 'price', 'category')
     list_filter = ("category", )
     search_fields = ("name", )
 
