@@ -13,6 +13,7 @@ from bot.src.registration import Registration
 from bot.src.conversation import Conversation
 from bot.src.promo import Promo
 from bot.src.group import Group
+from bot.src.error import error_handler
 from bot.utils.filter import FilterButton
 import os
 import logging
@@ -139,6 +140,7 @@ def main():
     dispatcher.add_handler(main_conversation)
     dispatcher.add_handler(MessageHandler(
         ReplyToMessageFilter(Filters.user(BOT_ID)), group.reply_to_user))
+    dispatcher.add_error_handler(error_handler)
 
     updater.start_polling()
     updater.idle()
