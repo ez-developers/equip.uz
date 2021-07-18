@@ -3,7 +3,7 @@ from telegram.ext import CallbackContext
 from bot.src.menu import Menu
 from bot.utils.get_photo_id import get_photo_id
 from bot.utils._reqs import get
-from backend.settings import API_URL, API_AUTHENTICATION, BASE_DIR
+from backend.settings import API_URL, API_AUTHENTICATION, BASE_DIR, GROUP_ID
 import json
 import requests
 import logging
@@ -96,6 +96,8 @@ class Promo:
             toggler.pop()
         elif next_display_id == context.user_data['first_promo']:
             toggler.pop(0)
+        if len(context.user_data['promo_ids']) == 1:
+            togger = []
         promo = get(f"promo/{next_display_id}")
         promo_text = f"<b>{promo['name']}</b>\n\n{promo['text']}"
 
@@ -121,7 +123,13 @@ class Promo:
                                parse_mode='HTML')
 
     def like_it(self, update: Update, context: CallbackContext):
-        pass
+        chat_id = update.effective_chat.id
+        query = update.callback_query
+        user = get(f"users/{chat_id}")
+        query.answer()
+        context.bot.send_message(chat_id,
+                                 f"""Пользователю <b>{user['name']}</b> нравится акция 👇""")
+        query.copy_message(GROUP_ID)
 
     def back_to_menu(self, update: Update, context: CallbackContext):
         query = update.callback_query
