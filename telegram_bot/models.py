@@ -39,7 +39,8 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(
         verbose_name="Название продукта", max_length=255, null=True)
-    description = models.TextField(verbose_name="Описание", null=True)
+    description = models.TextField(
+        verbose_name="Описание", max_length=4000, null=True)
     price = models.PositiveBigIntegerField(
         verbose_name="Цена", null=True)
     category = models.ForeignKey(
