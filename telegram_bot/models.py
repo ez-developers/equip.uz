@@ -59,7 +59,8 @@ class Promo(models.Model):
 
     name = models.CharField(max_length=255, null=True,
                             blank=False, verbose_name="Название промо-акции")
-    text = models.TextField(verbose_name="Текст", blank=False, null=True)
+    text = models.TextField(verbose_name="Текст",
+                            blank=False, null=True, max_length=1024)
     image = models.ImageField(
         "Фото", upload_to="uploads/promo/%Y_%m_%d")
 
