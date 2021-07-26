@@ -80,7 +80,7 @@ class Registration:
         try:
             if int(name_input):
                 update.effective_message.reply_text(
-                    "Имя не может состоять из цифр!")
+                    "Исм сонлардан иборат бўлиши мумкин эмас!")
         except ValueError:
             if name_input[0].isupper():
                 payload = {
@@ -92,15 +92,15 @@ class Registration:
                                    json=payload)
                 if req.status_code == 400 and req.reason == "Bad Request":
                     update.effective_message.reply_text(
-                        "Убедитесь, что имя содержит не более 30 букв."
+                        "Исм 30 ҳарф ёки ундан кам бўлганлигига ишонч ҳосил қилинг."
                     )
                 if req.status_code == 200:
                     update.effective_message.reply_text(
-                        f"Приятно познакомиться, {update.effective_message.text}!")
+                        f"Танишганимдан хурсандман, {update.effective_message.text}!")
                     return self.request_phone(update, context)
             else:
                 update.effective_message.reply_text(
-                    "Напишите имя с заглавной буквы")
+                    "Исмни катта ҳарф билан ёзинг")
 
     def request_phone(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
@@ -128,7 +128,7 @@ class Registration:
 
         send_sms(phone, sms_text(code))
         update.effective_message.reply_text(
-            "Код был отправлен. Введите его для активации.",
+            "Код юборилди. Фаоллаштириш учун уни киритинг.",
             reply_markup=ReplyKeyboardMarkup([
                 [KeyboardButton(txt['buttons']['resend_code'])],
                 [KeyboardButton(txt['buttons']['reenter_phone'])]
@@ -151,7 +151,7 @@ class Registration:
                 return self.send_code(update, context)
             else:
                 update.effective_message.reply_text(
-                    "Пока что принимаем только номера в Узбекистане!")
+                    "Ҳозирча биз фақат Ўзбекистондаги рақамларни қабул қиламиз!")
 
         else:
             phone = update.message.text[1:]
@@ -177,13 +177,10 @@ class Registration:
                              json=user)
 
                 update.effective_message.reply_text(
-                    'Отлично, Ваш номер подтвержден!')
+                    'Ажойиб, рақамингиз тасдиқланди!')
                 return Conversation().display(update, context, after_registration=True)
             else:
                 update.effective_message.reply_text(
-                    "Код неправильный. Попробуйте ещё раз!")
+                    "Код нотўғри. Яна бир бор уриниб кўринг!")
         except ValueError:
-            update.effective_message.reply_text('Код состоит только из цифр')
-
-    def asking_item(self, update: Update, context: CallbackContext):
-        pass
+            update.effective_message.reply_text('Код фақат рақамлардан иборат')

@@ -101,12 +101,11 @@ class Conversation:
                                           from_chat_id=chat_id,
                                           message_id=user_request.message_id)
         context.bot.send_message(GROUP_ID,
-                                 f"""Пользователь: <b>{user_name}</b>\nТелефон: <b>{user_phone}</b>""",
+                                 f"""Фойдаланувчи: <b>{user_name}</b>\nТелефон: <b>{user_phone}</b>""",
                                  parse_mode='HTML')
         payload = {
             msg.message_id: chat_id
         }
         context.bot_data.update(payload)
-        update.effective_message.reply_text(
-            "Принято! Бот направил ваше обращение менеджерам компании, вам скоро ответят 😇")
+        update.effective_message.reply_text(text["request_accepted"])
         return Menu().display(update, context)

@@ -14,7 +14,7 @@ class Group:
 
                 user_id = context.bot_data[reply_id]
 
-                reply = f"<b>Вам ответил менеджер:</b>\n\n{response}"
+                reply = f"<b>Сизга менежер жавоб йўллади:</b>\n\n{response}"
 
                 context.bot.send_message(chat_id=user_id,
                                          text=reply,
@@ -23,4 +23,4 @@ class Group:
                 pass
         except KeyError:
             update.effective_message.reply_text(
-                'Ошибка! На это я не могу ответить. Возможно данные на сервере были утеряны.')
+                'Хато! Бунга жавоб беролмайман. Сервердаги маълумотлар йўқолган бўлиши мумкин.')

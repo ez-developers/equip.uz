@@ -43,7 +43,7 @@ class Broadcast:
                 chat_ids.append(i['user_id'])
 
         update.effective_message.reply_text(
-            "Начинаю рассылать всем", reply_markup=ReplyKeyboardRemove())
+            "Мен ҳаммага юборишни бошладим", reply_markup=ReplyKeyboardRemove())
         for user in chat_ids:
             try:
                 msg = message.copy(user)
@@ -52,5 +52,5 @@ class Broadcast:
             except Unauthorized:
                 continue
         update.effective_message.reply_text(
-            f"Рассылка окончена! Доставлено {len(sent_to)}/{len(chat_ids)}")
+            f"Ахборотларни юбориш тугади! Етказиб берилди {len(sent_to)}/{len(chat_ids)}")
         return Menu().display(update, context)

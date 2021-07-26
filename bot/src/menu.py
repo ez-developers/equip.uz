@@ -99,10 +99,10 @@ class Menu:
                                     for i in range(0, len(a), 3)])[::-1]
         caption = f"""<b>{product['name']}</b>
                                  
-<b>Описание:</b>
+<b>Тавсиф:</b>
 {product['description']}
                                  
-<b>Цена:</b>
+<b>Нархи:</b>
 {formatted_price} сум"""
 
         try:
@@ -153,11 +153,11 @@ class Menu:
         if notification_on(chat_id):
             user['notifications'] = False
             update.effective_message.reply_text(
-                "Вы отписались от уведомлений!")
+                "Сиз билдиришномаларни бекор қилдингиз!")
         else:
             user['notifications'] = True
             update.effective_message.reply_text(
-                "Подписка на уведомления возобновлена!")
+                "Билдиришномаларга обуна янгиланди!")
         requests.put(API_URL + f'users/{chat_id}',
                      auth=API_AUTHENTICATION,
                      json=user,
@@ -189,5 +189,5 @@ class Menu:
                      auth=API_AUTHENTICATION,
                      json=user)
         update.effective_message.reply_text(
-            "<b>Готово! ✅</b>", parse_mode='HTML')
+            "<b>Тайёр! ✅</b>", parse_mode='HTML')
         return self.settings(update, context)

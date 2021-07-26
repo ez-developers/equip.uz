@@ -35,7 +35,7 @@ class Promo:
 
         if len(promos) == 0:
             update.effective_message.reply_text(
-                "<b>Действующих акций пока нет 😔</b>", parse_mode='HTML')
+                "<b>Ҳозирча акциялар мавжуд эмас 😔</b>", parse_mode='HTML')
             return
         for promo in promos:
             promo_ids.append(promo['id'])
@@ -126,7 +126,7 @@ class Promo:
         user = get(f"users/{chat_id}")
         query.answer()
         context.bot.send_message(GROUP_ID,
-                                 f"""Пользователю <b>{user['name']}</b> нравится акция 👇""",
+                                 f"""<b>{user['name']}</b>га қуйидаги акция ёқди 👇""",
                                  parse_mode='HTML')
         query.copy_message(GROUP_ID)
 
