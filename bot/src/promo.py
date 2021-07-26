@@ -125,8 +125,9 @@ class Promo:
         query = update.callback_query
         user = get(f"users/{chat_id}")
         query.answer()
-        context.bot.send_message(chat_id,
-                                 f"""Пользователю <b>{user['name']}</b> нравится акция 👇""")
+        context.bot.send_message(GROUP_ID,
+                                 f"""Пользователю <b>{user['name']}</b> нравится акция 👇""",
+                                 parse_mode='HTML')
         query.copy_message(GROUP_ID)
 
     def back_to_menu(self, update: Update, context: CallbackContext):
