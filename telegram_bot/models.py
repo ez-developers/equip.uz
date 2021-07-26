@@ -40,7 +40,7 @@ class Product(models.Model):
     name = models.CharField(
         verbose_name="Название продукта", max_length=255, null=True)
     description = models.TextField(
-        verbose_name="Описание", max_length=1024, null=True)
+        verbose_name="Описание", max_length=1024)
     price = models.PositiveBigIntegerField(
         verbose_name="Цена", null=True)
     category = models.ForeignKey(
@@ -60,7 +60,7 @@ class Promo(models.Model):
     name = models.CharField(max_length=255, null=True,
                             blank=False, verbose_name="Название промо-акции")
     text = models.TextField(verbose_name="Текст",
-                            blank=False, null=True, max_length=1024)
+                            max_length=1024)
     image = models.ImageField(
         "Фото", upload_to="uploads/promo/%Y_%m_%d")
 
