@@ -45,7 +45,8 @@ BOT_ID = 1771123936  # ( @equipuz_bot )
 DEVELOPER_ID = 361516746
 ADMIN_IDS = [
     DEVELOPER_ID,
-    943373513
+    943373513,
+    1318919684
 ]
 
 # Application definition
