@@ -103,7 +103,7 @@ class Menu:
 {product['description']}
                                  
 <b>Нархи:</b>
-{formatted_price} сум"""
+$ {formatted_price}"""
 
         try:
             file_id = context.bot_data['product_' + str(product['id'])]
