@@ -38,4 +38,4 @@ def send_sms(recipient: int,
 
 
 def sms_text(code: int):
-    return f'Ваш код регистрации для "Equip" - {code}. Введите его в телеграм бот.'
+    return f'Сизнинг "Equip" учун рўйхатдан ўтиш кодингиз: {code}. Уни телеграм ботга киритинг'
