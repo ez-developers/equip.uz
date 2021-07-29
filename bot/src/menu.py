@@ -119,7 +119,7 @@ $ {formatted_price}"""
         context.bot.send_media_group(chat_id,
                                      media=[
                                          InputMediaPhoto(media=open(j, 'rb')) for j in displayed
-                                     ], timeout=60)
+                                     ])
         context.bot.send_message(chat_id, caption,
                                  parse_mode='HTML')
 
