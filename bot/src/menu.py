@@ -107,8 +107,12 @@ class Menu:
 $ {formatted_price}"""
 
         for i in range(1, 11):
-            if i[f'image_{i}'] is not None:
-                product_images.append(str(BASE_DIR) + product[f'image_{i}'])
+            product_images.append(product[f'image_{i}'])
+        real = []
+        for j in product_images:
+            if j is not None:
+                real.append(str(BASE_DIR) + j[f'image_{j}'])
+                
         context.bot.send_message(chat_id, text['downloading'])
         context.bot.send_chat_action(chat_id,
                                      action=ChatAction.UPLOAD_PHOTO)
