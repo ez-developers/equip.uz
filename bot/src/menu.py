@@ -110,15 +110,16 @@ $ {formatted_price}"""
             product_images.append(product[f'image_{i}'])
         real = []
         for j in product_images:
-            if j is not None:
-                real.append(str(BASE_DIR) + j[f'image_{j}'])
-                
+            if j is None:
+                continue
+            real.append(str(BASE_DIR) + j[f'image_{j}'])
+
         context.bot.send_message(chat_id, text['downloading'])
         context.bot.send_chat_action(chat_id,
                                      action=ChatAction.UPLOAD_PHOTO)
         context.bot.send_media_group(chat_id,
                                      media=[
-                                         InputMediaPhoto(media=open(j, 'rb')) for j in product_images
+                                         InputMediaPhoto(media=open(j, 'rb')) for j in real
                                      ], timeout=60)
         time.sleep(1.99)
         context.bot.send_message(chat_id, caption,
