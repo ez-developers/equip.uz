@@ -113,14 +113,13 @@ $ {formatted_price}"""
             if image is not None:
                 displayed.append(str(BASE_DIR) + image)
 
-        context.bot.send_message(chat_id, text['downloading'])
+        # context.bot.send_message(chat_id, text['downloading'])
         context.bot.send_chat_action(chat_id,
                                      action=ChatAction.UPLOAD_PHOTO)
         context.bot.send_media_group(chat_id,
                                      media=[
                                          InputMediaPhoto(media=open(j, 'rb')) for j in displayed
                                      ], timeout=60)
-        time.sleep(1.99)
         context.bot.send_message(chat_id, caption,
                                  parse_mode='HTML')
 
