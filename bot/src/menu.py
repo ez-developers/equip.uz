@@ -95,9 +95,9 @@ class Menu:
         requested_product = update.message.text
         product = product_det(requested_product)
         product_images = []
-        a = str(product['price'])
-        formatted_price = ' '.join([a[::-1][i:i+3]
-                                    for i in range(0, len(a), 3)])[::-1]
+        price = str(product['price'])
+        formatted_price = ' '.join([price[::-1][i:i+3]
+                                    for i in range(0, len(price), 3)])[::-1]
         caption = f"""<b>{product['name']}</b>
                                  
 <b>Тавсиф:</b>
@@ -108,18 +108,17 @@ $ {formatted_price}"""
 
         for i in range(1, 11):
             product_images.append(product[f'image_{i}'])
-        real = []
-        for j in product_images:
-            if j is None:
-                continue
-            real.append(str(BASE_DIR) + j[f'image_{j}'])
+        displayed = []
+        for image in product_images:
+            if image is not None:
+                displayed.append(str(BASE_DIR) + image)
 
         context.bot.send_message(chat_id, text['downloading'])
         context.bot.send_chat_action(chat_id,
                                      action=ChatAction.UPLOAD_PHOTO)
         context.bot.send_media_group(chat_id,
                                      media=[
-                                         InputMediaPhoto(media=open(j, 'rb')) for j in real
+                                         InputMediaPhoto(media=open(j, 'rb')) for j in product_images
                                      ], timeout=60)
         time.sleep(1.99)
         context.bot.send_message(chat_id, caption,
