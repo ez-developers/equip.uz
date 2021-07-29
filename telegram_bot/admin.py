@@ -15,6 +15,7 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ("user_id", "name", "username",
                     "phone_number", "notifications")
     list_display_links = ("user_id",)
+    search_fields = ("name", )
     change_form_template = 'admin/change_form.html'
 
     def has_change_permission(self, request, obj=None):
