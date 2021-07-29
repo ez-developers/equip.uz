@@ -45,7 +45,16 @@ class Product(models.Model):
         verbose_name="Цена", null=True)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, verbose_name="Категория", null=True)
-    image = models.ImageField("Фото", upload_to="uploads/products/%Y_%m_%d/",)
+    image = models.ImageField("Фото 1", upload_to="uploads/products/%Y_%m_%d/", null=True)
+    image_1 = models.ImageField("Фото 2", upload_to="uploads/products/%Y_%m_%d/", null=True)
+    image_2 = models.ImageField("Фото 3", upload_to="uploads/products/%Y_%m_%d/", null=True)
+    image_3 = models.ImageField("Фото 4", upload_to="uploads/products/%Y_%m_%d/", null=True)
+    image_4 = models.ImageField("Фото 5", upload_to="uploads/products/%Y_%m_%d/", null=True)
+    image_5 = models.ImageField("Фото 6", upload_to="uploads/products/%Y_%m_%d/", null=True)
+    image_6 = models.ImageField("Фото 7", upload_to="uploads/products/%Y_%m_%d/", null=True)
+    image_7 = models.ImageField("Фото 8", upload_to="uploads/products/%Y_%m_%d/", null=True)
+    image_8 = models.ImageField("Фото 9", upload_to="uploads/products/%Y_%m_%d/", null=True)
+    image_9 = models.ImageField("Фото 10", upload_to="uploads/products/%Y_%m_%d/", null=True)
 
     class Meta:
         verbose_name_plural = "Продукты"
