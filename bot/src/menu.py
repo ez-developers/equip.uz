@@ -113,7 +113,7 @@ $ {formatted_price}"""
                                      action=ChatAction.UPLOAD_PHOTO)
         context.bot.send_media_group(chat_id,
                                      media=[
-                                         InputMediaPhoto(media=open(i, 'rb')) for i in product_images
+                                         InputMediaPhoto(media=open(j, 'rb')) for j in product_images
                                      ], timeout=60)
         time.sleep(1.99)
         context.bot.send_message(chat_id, caption,
