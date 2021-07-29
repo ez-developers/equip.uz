@@ -50,21 +50,21 @@ class Product(models.Model):
     image_2 = models.ImageField(
         "Фото 2", upload_to="uploads/products/%Y_%m_%d/", null=True)
     image_3 = models.ImageField(
-        "Фото 3", upload_to="uploads/products/%Y_%m_%d/", null=True)
+        "Фото 3", upload_to="uploads/products/%Y_%m_%d/", null=True, blank=True)
     image_4 = models.ImageField(
-        "Фото 4", upload_to="uploads/products/%Y_%m_%d/", null=True)
+        "Фото 4", upload_to="uploads/products/%Y_%m_%d/", null=True, blank=True)
     image_5 = models.ImageField(
-        "Фото 5", upload_to="uploads/products/%Y_%m_%d/", null=True)
+        "Фото 5", upload_to="uploads/products/%Y_%m_%d/", null=True, blank=True)
     image_6 = models.ImageField(
-        "Фото 6", upload_to="uploads/products/%Y_%m_%d/", null=True)
+        "Фото 6", upload_to="uploads/products/%Y_%m_%d/", null=True, blank=True)
     image_7 = models.ImageField(
-        "Фото 7", upload_to="uploads/products/%Y_%m_%d/", null=True)
+        "Фото 7", upload_to="uploads/products/%Y_%m_%d/", null=True, blank=True)
     image_8 = models.ImageField(
-        "Фото 8", upload_to="uploads/products/%Y_%m_%d/", null=True)
+        "Фото 8", upload_to="uploads/products/%Y_%m_%d/", null=True, blank=True)
     image_9 = models.ImageField(
-        "Фото 9", upload_to="uploads/products/%Y_%m_%d/", null=True)
+        "Фото 9", upload_to="uploads/products/%Y_%m_%d/", null=True, blank=True)
     image_10 = models.ImageField(
-        "Фото 10", upload_to="uploads/products/%Y_%m_%d/", null=True)
+        "Фото 10", upload_to="uploads/products/%Y_%m_%d/", null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "Продукты"
