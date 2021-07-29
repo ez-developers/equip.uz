@@ -1,10 +1,10 @@
-from telegram import ReplyKeyboardMarkup, Update, KeyboardButton, ChatAction
+from telegram import ReplyKeyboardMarkup, Update, KeyboardButton, ChatAction, InputMediaPhoto, chat
 from telegram.ext import CallbackContext
 from bot.utils.build_menu import build_menu
 from bot.utils._reqs import (parser,
                              target_category_id,
                              products_list,
-                             product_details,
+                             product_det,
                              notification_on,
                              get)
 from bot.utils.get_photo_id import get_photo_id
@@ -93,7 +93,8 @@ class Menu:
     def product_details(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
         requested_product = update.message.text
-        product = product_details(requested_product)
+        product = product_det(requested_product)
+        product_images = []
         a = str(product['price'])
         formatted_price = ' '.join([a[::-1][i:i+3]
                                     for i in range(0, len(a), 3)])[::-1]
@@ -105,26 +106,18 @@ class Menu:
 <b>Нархи:</b>
 $ {formatted_price}"""
 
-        try:
-            file_id = context.bot_data['product_' + str(product['id'])]
-            context.bot.send_photo(chat_id,
-                                   photo=file_id,
-                                   caption=caption, parse_mode='HTML')
-            return
-        except KeyError:
-            pass
-        if product['image'][-1] == '/':
-            product['image'] = product['image'][:-1]
+        for i in range(1, 11):
+            product_images.append(str(BASE_DIR) + product[f'image_{i}'])
+        context.bot.send_message(chat_id, text['downloading'])
         context.bot.send_chat_action(chat_id,
                                      action=ChatAction.UPLOAD_PHOTO)
-        msg = context.bot.send_photo(chat_id,
-                                     photo=open(str(BASE_DIR) +
-                                                product['image'], 'rb'),
-                                     caption=caption, parse_mode='HTML')
-        payload = {
-            'product_' + str(product['id']): get_photo_id(msg.photo)
-        }
-        context.bot_data.update(payload)
+        context.bot.send_media_group(chat_id,
+                                     media=[
+                                         InputMediaPhoto(media=open(i, 'rb')) for i in product_images
+                                     ], timeout=60)
+        time.sleep(1.99)
+        context.bot.send_message(chat_id, caption,
+                                 parse_mode='HTML')
 
     def settings(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id

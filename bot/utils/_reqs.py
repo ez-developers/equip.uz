@@ -33,7 +33,7 @@ def products_list(category_id: int) -> list:
     return output
 
 
-def product_details(product_name: str) -> dict:
+def product_det(product_name: str) -> dict:
     response = requests.get(API_URL + 'products/',
                             auth=API_AUTHENTICATION).json()
     for product in response:
