@@ -21,6 +21,7 @@ class Conversation:
 
         if after_registration:
 
+            context.bot.send_message(chat_id, text["post_code"])
             context.bot.send_message(chat_id,
                                      text['choose_type_conversation'],
                                      reply_markup=ReplyKeyboardMarkup([
