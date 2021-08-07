@@ -10,6 +10,7 @@ tests/
 uploads/products
 uploads/promo
 static/
+RESTRICTED
 
 # C extensions
 *.so
