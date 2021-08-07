@@ -1,9 +1,8 @@
 from telegram import Update, ReplyKeyboardRemove, InlineKeyboardMarkup, InlineKeyboardButton, ChatAction
 from telegram.ext import CallbackContext
 from bot.src.menu import Menu
-from bot.utils.get_photo_id import get_photo_id
 from bot.utils._reqs import get
-from backend.settings import API_URL, API_AUTHENTICATION, BASE_DIR, GROUP_ID
+from backend.settings import API_URL, API_AUTHENTICATION, GROUP_ID
 import json
 import requests
 import logging
