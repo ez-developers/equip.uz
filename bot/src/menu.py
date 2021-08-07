@@ -141,7 +141,7 @@ $ {formatted_price}"""
         user = get(f"users/{chat_id}")
         query.answer()
         context.bot.send_message(GROUP_ID,
-                                 f"""<b>{user['name']}</b>га қуйидаги акция ёқди 👇""",
+                                 f"""<b>{user['name']}</b>га қуйидаги маҳсулот ёқди 👇""",
                                  parse_mode='HTML')
         query.copy_message(GROUP_ID)
 
