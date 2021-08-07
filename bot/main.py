@@ -79,7 +79,8 @@ def main():
             "PRODUCTS": [
                 MessageHandler(Filters.regex(
                     menu_buttons["back"]), menu.categories),
-                MessageHandler(FilterButton("products"), menu.product_details)
+                MessageHandler(FilterButton("products"), menu.product_details),
+                CallbackQueryHandler(menu.product_like, pattern='like')
             ],
             "PROMO_DISPLAYED": [
                 CallbackQueryHandler(promo.back_to_menu, pattern="exit"),

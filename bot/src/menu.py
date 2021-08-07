@@ -1,4 +1,10 @@
-from telegram import ReplyKeyboardMarkup, Update, KeyboardButton, ChatAction, InputMediaPhoto, chat
+from telegram import (ReplyKeyboardMarkup,
+                      Update,
+                      KeyboardButton,
+                      ChatAction,
+                      InputMediaPhoto,
+                      InlineKeyboardButton,
+                      InlineKeyboardMarkup)
 from telegram.ext import CallbackContext
 from bot.utils.build_menu import build_menu
 from bot.utils._reqs import (parser,
@@ -7,8 +13,7 @@ from bot.utils._reqs import (parser,
                              product_det,
                              notification_on,
                              get)
-from bot.utils.get_photo_id import get_photo_id
-from backend.settings import API_URL, API_AUTHENTICATION, BASE_DIR
+from backend.settings import API_URL, API_AUTHENTICATION, BASE_DIR, GROUP_ID
 import logging
 import time
 import json
@@ -105,6 +110,9 @@ class Menu:
                                  
 <b>Нархи:</b>
 $ {formatted_price}"""
+        like_button = [
+            InlineKeyboardButton(button['like_it'], callback_data='like')
+        ]
 
         for i in range(1, 11):
             product_images.append(product[f'image_{i}'])
@@ -122,7 +130,20 @@ $ {formatted_price}"""
                                      ])
         time.sleep(1)
         context.bot.send_message(chat_id, caption,
+                                 parse_mode='HTML',
+                                 reply_markup=InlineKeyboardMarkup([
+                                     like_button
+                                 ]))
+
+    def product_like(self, update: Update, context: CallbackContext):
+        chat_id = update.effective_chat.id
+        query = update.callback_query
+        user = get(f"users/{chat_id}")
+        query.answer()
+        context.bot.send_message(GROUP_ID,
+                                 f"""<b>{user['name']}</b>га қуйидаги акция ёқди 👇""",
                                  parse_mode='HTML')
+        query.copy_message(GROUP_ID)
 
     def settings(self, update: Update, context: CallbackContext):
         chat_id = update.effective_chat.id
