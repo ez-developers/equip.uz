@@ -124,6 +124,8 @@ class Promo:
         query = update.callback_query
         user = get(f"users/{chat_id}")
         query.answer()
+        update.effective_message.reply_text(
+            "Сизга акциямиз ёққанидан мамнунмиз 😊")
         context.bot.send_message(GROUP_ID,
                                  f"""<b>{user['name']}</b>га қуйидаги акция ёқди 👇""",
                                  parse_mode='HTML')

@@ -140,6 +140,8 @@ $ {formatted_price}"""
         query = update.callback_query
         user = get(f"users/{chat_id}")
         query.answer()
+        update.effective_message.reply_text(
+            "Сизга маҳсулотимиз ёққанидан мамнунмиз 😊")
         context.bot.send_message(GROUP_ID,
                                  f"""<b>{user['name']}</b>га қуйидаги маҳсулот ёқди 👇""",
                                  parse_mode='HTML')
