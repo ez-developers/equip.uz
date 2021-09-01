@@ -6,7 +6,7 @@ from django.utils.html import format_html
 class User(models.Model):
     class Meta:
         verbose_name_plural = "Пользователи"
-        verbose_name = "Пользователь"
+        verbose_name = "пользователя"
 
     user_id = models.BigIntegerField(
         primary_key=True, verbose_name="ID пользователя")
@@ -30,7 +30,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = "Категории"
-        verbose_name = "Категорию"
+        verbose_name = "категорию"
 
     def __str__(self):
         return self.name
@@ -68,7 +68,7 @@ class Product(models.Model):
 
     class Meta:
         verbose_name_plural = "Продукты"
-        verbose_name = "Продукт"
+        verbose_name = "продукт"
 
     def __str__(self):
         return self.name
@@ -87,7 +87,7 @@ class Promo(models.Model):
         auto_now_add=True, null=True, verbose_name="Дата публикации")
 
     class Meta:
-        verbose_name = "Промоакция"
+        verbose_name = "промоакцию"
         verbose_name_plural = "Промокации"
 
     def __str__(self):
