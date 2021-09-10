@@ -24,7 +24,7 @@ click==7.1.2
 colorama==0.4.4
 commandlines==0.4.1
 covid==2.4.1
-cryptography==3.3.1
+cryptography==3.3.2
 cvzone==1.1
 cycler==0.10.0
 decorator==4.4.2
