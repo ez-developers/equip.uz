@@ -35,7 +35,7 @@ ALLOWED_HOSTS = [
 ]
 
 SMS_API_URL = "http://91.204.239.44/broker-api/send"
-API_URL = 'http://localhost:8000/api/'
+API_URL = 'http://equip.ezpz.uz/api/'
 API_AUTHENTICATION = HTTPBasicAuth(os.getenv('REST_API_USERNAME'),
                                    os.getenv('REST_API_PASSWORD'))
 GROUP_ID = -1001541510798
