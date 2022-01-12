@@ -137,6 +137,7 @@ class Registration:
         return state
 
     def get_phone(self, update: Update, context: CallbackContext):
+        chat_id = update.effective_chat.id
         message = update.effective_message
 
         if message.contact:
@@ -148,6 +149,12 @@ class Registration:
                 context.user_data.update({
                     "phone_number": phone
                 })
+                user = get(f'users/{chat_id}')
+                user['phone_number'] = context.user_data['phone_number'][3:]
+
+                requests.put(API_URL + f'users/{chat_id}',
+                             auth=API_AUTHENTICATION,
+                             json=user)
                 return Conversation().display(update, context,
                                               after_registration=True)
             else:
@@ -160,6 +167,13 @@ class Registration:
                 context.user_data.update({
                     "phone_number": phone
                 })
+
+                user = get(f'users/{chat_id}')
+                user['phone_number'] = context.user_data['phone_number'][3:]
+
+                requests.put(API_URL + f'users/{chat_id}',
+                             auth=API_AUTHENTICATION,
+                             json=user)
                 return Conversation().display(update, context,
                                               after_registration=True)
             else:
