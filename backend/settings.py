@@ -31,11 +31,11 @@ SECRET_KEY = os.getenv('DJANGO_SECRET')
 DEBUG = os.environ.get('DEBUG', False) == 'True'
 
 ALLOWED_HOSTS = [
-    'equip.ezpz.uz', '127.0.0.1', '178.62.45.117'
+    'localhost', '127.0.0.1'
 ]
 
 SMS_API_URL = "http://91.204.239.44/broker-api/send"
-API_URL = 'https://equip.ezpz.uz/api/'
+API_URL = 'http://localhost:8000/api/'
 API_AUTHENTICATION = HTTPBasicAuth(os.getenv('REST_API_USERNAME'),
                                    os.getenv('REST_API_PASSWORD'))
 GROUP_ID = -1001541510798
@@ -106,13 +106,13 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': 'equipuz_prod',
+        'NAME': 'equipuz',
 
         'USER': os.getenv('DATABASE_USERNAME'),
 
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
 
-        'HOST': '46.101.223.149',
+        'HOST': 'localhost',
 
         'PORT': '5432',
     },

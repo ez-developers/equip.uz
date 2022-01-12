@@ -154,8 +154,7 @@ $ {formatted_price}"""
         notifcation_button = button["notification_off"] if notif_status else button["notification_on"]
 
         buttons = [
-            [button["change_phone"],
-             button["change_name"]],
+            [button["change_name"]],
             [notifcation_button],
             [menu_button['back']]
         ]

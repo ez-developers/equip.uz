@@ -148,7 +148,8 @@ class Registration:
                 context.user_data.update({
                     "phone_number": phone
                 })
-                return self.send_code(update, context)
+                return Conversation().display(update, context,
+                                              after_registration=True)
             else:
                 update.effective_message.reply_text(
                     "Ҳозирча биз фақат Ўзбекистондаги рақамларни қабул қиламиз!")
@@ -159,7 +160,8 @@ class Registration:
                 context.user_data.update({
                     "phone_number": phone
                 })
-                return self.send_code(update, context)
+                return Conversation().display(update, context,
+                                              after_registration=True)
             else:
                 self.request_phone(update, context)
 

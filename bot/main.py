@@ -95,8 +95,6 @@ def main():
                                Filters.regex(buttons["notification_off"]),
                                menu.change_notification_status),
                 MessageHandler(Filters.regex(
-                    buttons["change_phone"]), registration.request_phone),
-                MessageHandler(Filters.regex(
                     buttons["change_name"]), menu.change_name),
             ],
             "EDITING_NAME": [
@@ -151,7 +149,7 @@ def main():
     dispatcher.add_handler(main_conversation)
     dispatcher.add_handler(MessageHandler(
         ReplyToMessageFilter(Filters.user(BOT_ID)), group.reply_to_user))
-    dispatcher.add_error_handler(error_handler)
+    # dispatcher.add_error_handler(error_handler)
 
     updater.start_polling()
     updater.idle()
