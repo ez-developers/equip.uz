@@ -31,7 +31,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET')
 DEBUG = os.environ.get('DEBUG', False) == 'True'
 
 ALLOWED_HOSTS = [
-    'localhost', '127.0.0.1'
+    'localhost', '127.0.0.1', 'equip.ezpz.uz'
 ]
 
 SMS_API_URL = "http://91.204.239.44/broker-api/send"
