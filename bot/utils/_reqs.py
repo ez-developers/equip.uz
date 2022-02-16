@@ -26,11 +26,11 @@ def target_category_id(category_name: str) -> int:
 
 
 def products_list(category_id: int) -> list:
-    output = []
+    res = []
     for i in get('products/'):
         if i['category'] == category_id:
-            output.append(i['name'])
-    return output
+            res.append(i['name'])
+    return res
 
 
 def product_det(product_name: str) -> dict:
@@ -43,7 +43,4 @@ def product_det(product_name: str) -> dict:
 
 def notification_on(chat_id) -> bool:
     user = get(f'users/{chat_id}')
-    if user["notifications"]:
-        return True
-    else:
-        return False
+    return user["notifications"]
