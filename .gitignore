@@ -6,7 +6,6 @@ __pycache__/
 # Custom ignored files
 /.idea/
 .DS_Store
-tests/
 uploads/products
 uploads/promo
 static/
