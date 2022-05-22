@@ -8,6 +8,7 @@ chardet==4.0.0
 colorama==0.4.4
 Django==3.2.12
 djangorestframework==3.12.4
+gunicorn==20.1.0
 idna==2.10
 iniconfig==1.1.1
 packaging==20.9
