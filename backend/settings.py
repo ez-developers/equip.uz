@@ -31,15 +31,15 @@ SECRET_KEY = os.getenv('DJANGO_SECRET')
 DEBUG = os.environ.get('DEBUG', False) == 'True'
 
 ALLOWED_HOSTS = [
-    'localhost', '127.0.0.1', 'equip.ezpz.uz'
+    'localhost', '127.0.0.1', 'equip.ezpz.uz', 'equipadmin.ezpz.uz'
 ]
 
 SMS_API_URL = "http://91.204.239.44/broker-api/send"
 API_URL = 'https://equip.ezpz.uz/api/'
 API_AUTHENTICATION = HTTPBasicAuth(os.getenv('REST_API_USERNAME'),
                                    os.getenv('REST_API_PASSWORD'))
-GROUP_ID = -1001541510798
-BOT_ID = 1771123936  # ( @equipuz_bot )
+GROUP_ID = -1001562988952
+BOT_ID = 5362313456  # ( @equipuz_bot )
 DEVELOPER_ID = 5340177802
 ADMIN_IDS = [
     DEVELOPER_ID,
