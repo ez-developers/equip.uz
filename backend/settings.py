@@ -50,6 +50,7 @@ ADMIN_IDS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'django_light',
     'telegram_bot',
     'django.contrib.admin',
     'django.contrib.auth',
