@@ -44,7 +44,8 @@ DEVELOPER_ID = 5340177802
 ADMIN_IDS = [
     DEVELOPER_ID,
     943373513,
-    1318919684
+    1318919684,
+    421853212 # Temur
 ]
 
 # Application definition
